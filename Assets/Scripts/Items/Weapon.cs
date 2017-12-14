@@ -7,6 +7,14 @@ public class Weapon : Item {
     public float fireRate;
     public int magazineSize;
     public float bulletSpeed;
+    public float effectSpawnRate = 1;
+
+    [HideInInspector]
+    public int bullets;
+
+    void Awake() {
+        bullets = magazineSize;
+    }
 
     public override void Use() {
         if (this.equiped) {
