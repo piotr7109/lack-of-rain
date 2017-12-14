@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class WeaponController : MonoBehaviour {
 
@@ -12,7 +13,9 @@ public class WeaponController : MonoBehaviour {
     private float timeToSpawnEffect = 0;
     private Transform firePoint;
     private Camera cam;
-    private Weapon weapon;
+    public Weapon weapon;
+
+    private bool isReloading = false;
 
     void Start() {
         cam = Camera.main;
@@ -22,18 +25,36 @@ public class WeaponController : MonoBehaviour {
     }
 
     void Update() {
-        if (weapon != null) {
-            if (weapon.fireRate == 0) {
-                if (Input.GetButtonDown("Fire1")) {
-                    TryToShoot();
-                }
-            } else {
-                if (Input.GetButton("Fire1") && Time.time > timeToFire) {
-                    timeToFire = Time.time + 1 / weapon.fireRate;
-                    TryToShoot();
-                }
+        if (isReloading || weapon == null) {
+            return;
+        }
+
+        if (weapon.fireRate == 0) {
+            if (Input.GetButtonDown("Fire1")) {
+                TryToShoot();
+            }
+        } else {
+            if (Input.GetButton("Fire1") && Time.time > timeToFire) {
+                timeToFire = Time.time + 1 / weapon.fireRate;
+                TryToShoot();
             }
         }
+
+        if (Input.GetButtonDown("Reload")) {
+            StartCoroutine(Reload());
+        }
+    }
+
+    IEnumerator Reload() {
+        isReloading = true;
+
+        if (weapon.Reload()) {
+            yield return new WaitForSeconds(weapon.reloadTime);
+        } else {
+            yield return null;
+        }
+
+        isReloading = false;
     }
 
     void TryToShoot() {
@@ -43,44 +64,33 @@ public class WeaponController : MonoBehaviour {
     }
 
     bool CheckIfCanShoot() {
-        return (
+        return
             weapon.bullets > 0 &&
-            !EventSystem.current.IsPointerOverGameObject()
-            );
+            !EventSystem.current.IsPointerOverGameObject();
     }
 
     void OnWeaponChanged(Weapon weapon) {
         this.weapon = weapon;
     }
-
+    
     void Shoot() {
-        Vector2 mousePosition = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 firePointPosition = (Vector2)firePoint.position;
-        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, mousePosition - firePointPosition, 100, whatToHit);
-
-        if (hit.collider != null) {
-            //damage enemy
-        }
-
         if (Time.time >= timeToSpawnEffect) {
-            Vector3 hitPos;
-            Vector3 hitNormal;
+            GameObject bullet = Instantiate(weapon.bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
+            Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mouseDirection = mousePosition - firePoint.position;
+            mouseDirection.z = 0;
+            mouseDirection = mouseDirection.normalized;
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            rb.AddForce(mouseDirection * weapon.bulletSpeed * 10);
 
-            if (hit.collider == null) {
-                hitPos = (mousePosition - firePointPosition) * 30;
-                hitNormal = new Vector3(9999, 9999, 9999);
-            } else {
-                hitPos = hit.point;
-                hitNormal = hit.normal;
-            }
+            bullet.GetComponent<BulletController>().damage = weapon.damage;
 
-            Effect(hitPos, hitNormal);
             timeToSpawnEffect = Time.time + 1 / weapon.effectSpawnRate;
             weapon.bullets--;
         }
     }
 
-    void Effect(Vector3 hitPos, Vector3 hitNormal) {
+   /* void Effect(Vector3 hitPos, Vector3 hitNormal) {
         Transform trail = Instantiate(bulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
         LineRenderer lr = trail.GetComponent<LineRenderer>();
 
@@ -101,5 +111,5 @@ public class WeaponController : MonoBehaviour {
         float size = Random.Range(.6f, .9f);
         clone.localScale = new Vector3(size, size, size);
         Destroy(clone.gameObject, .02f);
-    }
+    }*/
 }

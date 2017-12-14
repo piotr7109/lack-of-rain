@@ -8,6 +8,9 @@ public class Weapon : Item {
     public int magazineSize;
     public float bulletSpeed;
     public float effectSpawnRate = 1;
+    public WeaponType type;
+    public float reloadTime = 1f;
+    public GameObject bulletPrefab;
 
     [HideInInspector]
     public int bullets;
@@ -25,4 +28,16 @@ public class Weapon : Item {
             EquipmentManager.instance.EquipWeapon(this);
         }
     }
+
+    public bool Reload() {
+        int gainedBullets = Inventory.instance.FindBullets(type, magazineSize - bullets);
+
+        bullets += gainedBullets;
+        EquipmentManager.instance.SubscribeChange();
+
+        return gainedBullets > 0;
+    }
 }
+
+public enum WeaponType { Pistol, MachineGun };
+

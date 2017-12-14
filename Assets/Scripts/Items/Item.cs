@@ -13,6 +13,6 @@ public class Item : ScriptableObject {
     public virtual void Use() { }
 
     public void RemoveFromInventory() {
-        Inventory.instance.Remove(this);
+        Inventory.instance.DropItem(this);
     }
 }
