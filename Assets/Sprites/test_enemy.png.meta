@@ -1,0 +1,674 @@
+fileFormatVersion: 2
+guid: e74eab7c024fa164c8ac91c8363cf3e6
+timeCreated: 1513340195
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: testEnemy0
+    21300002: test_enemy_1
+    21300004: test_enemy_2
+    21300006: test_enemy_3
+    21300008: test_enemy_4
+    21300010: test_enemy_5
+    21300012: test_enemy_6
+    21300014: test_enemy_7
+    21300016: test_enemy_8
+    21300018: test_enemy_9
+    21300020: test_enemy_10
+    21300022: test_enemy_11
+    21300024: test_enemy_12
+    21300026: test_enemy_13
+    21300028: test_enemy_14
+    21300030: test_enemy_15
+    21300032: test_enemy_16
+    21300034: test_enemy_17
+    21300036: test_enemy_18
+    21300038: test_enemy_19
+    21300040: test_enemy_20
+    21300042: test_enemy_21
+    21300044: test_enemy_22
+    21300046: test_enemy_23
+    21300048: test_enemy_24
+    21300050: test_enemy_25
+    21300052: test_enemy_26
+    21300054: test_enemy_27
+    21300056: test_enemy_28
+    21300058: test_enemy_29
+    21300060: test_enemy_30
+    21300062: test_enemy_31
+    21300064: test_enemy_32
+    21300066: test_enemy_33
+    21300068: test_enemy_34
+    21300070: test_enemy_35
+    21300072: test_enemy_36
+    21300074: test_enemy_37
+    21300076: test_enemy_38
+    21300078: test_enemy_39
+    21300080: test_enemy_40
+    21300082: test_enemy_41
+    21300084: test_enemy_42
+    21300086: test_enemy_43
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: testEnemy0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 854
+        width: 87
+        height: 170
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_1
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 837
+        width: 105
+        height: 185
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_2
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 836
+        width: 118
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_3
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 837
+        width: 118
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_4
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 835
+        width: 117
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_5
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 832
+        width: 85
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_6
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 833
+        width: 123
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_7
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 931
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_8
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 833
+        width: 120
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_9
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 931
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_10
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 833
+        width: 127
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_11
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 931
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_12
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 641
+        width: 150
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_13
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 739
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_14
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 640
+        width: 146
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_15
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 641
+        width: 117
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_16
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 739
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_17
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 641
+        width: 145
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_18
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 739
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_19
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 640
+        width: 115
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_20
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 641
+        width: 127
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_21
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 739
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_22
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 444
+        width: 156
+        height: 388
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_23
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 447
+        width: 95
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_24
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 447
+        width: 92
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_25
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 446
+        width: 100
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_26
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 446
+        width: 96
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_27
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 440
+        width: 133
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_28
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 441
+        width: 123
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_29
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 447
+        width: 121
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_30
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 444
+        width: 96
+        height: 196
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_31
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 244
+        width: 127
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_32
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 244
+        width: 100
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_33
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 242
+        width: 90
+        height: 202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_34
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 232
+        width: 105
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_35
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 392
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_36
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 212
+        width: 121
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_37
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 392
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_38
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 212
+        width: 113
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_39
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 353
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_40
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 368
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_41
+      rect:
+        serializedVersion: 2
+        x: 610
+        y: 353
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_42
+      rect:
+        serializedVersion: 2
+        x: 615
+        y: 368
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: test_enemy_43
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 330
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

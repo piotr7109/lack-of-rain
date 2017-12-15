@@ -17,6 +17,13 @@ public class BulletController : MonoBehaviour {
             return;
         }
 
+        if (collider.transform.tag == "Enemy") {
+            CharacterStats targetStats = collider.transform.GetComponent<CharacterStats>();
+
+            targetStats.TakeDamage(damage);
+            Destroy(gameObject);
+        }
+
         hasHit = true;
         Destroy(gameObject, groundLifeTime);
     }

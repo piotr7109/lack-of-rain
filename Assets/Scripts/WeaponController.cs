@@ -3,12 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 
 public class WeaponController : MonoBehaviour {
-
-    public LayerMask whatToHit;
-    public Transform bulletTrailPrefab;
-    public Transform muzzleFlashPrefab;
-    public Transform hitPrefab;
-
+    
     private float timeToFire = 0;
     private float timeToSpawnEffect = 0;
     private Transform firePoint;

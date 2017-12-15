@@ -22,6 +22,7 @@ public class Interactable : MonoBehaviour {
     }
 
     public virtual void Interact() {
+        Debug.Log("Interaction with " + transform.name);
     }
 
     void OnDrawGizmosSelected() {
