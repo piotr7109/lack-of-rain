@@ -1,0 +1,58 @@
+{
+    "nodes": [
+        {
+            "nodeId": 0,
+            "text": "Hello",
+            "options": [
+                {
+                    "text": "You smell",
+                    "destinationNodeId": 1,
+                    "reaction": 0
+                },
+                {
+                    "text": "Hello",
+                    "destinationNodeId": 2,
+                    "reaction": 0
+                }
+            ]
+        },
+        {
+            "nodeId": 1,
+            "text": "That's rude",
+            "options": [
+                {
+                    "text": "Exit",
+                    "destinationNodeId": -1,
+                    "reaction": 0
+                }
+            ]
+        },
+        {
+            "nodeId": 2,
+            "text": "My name is [npc_name]",
+            "options": [
+                {
+                    "text": "My name is [player_name]",
+                    "destinationNodeId": 3,
+                    "reaction": 0
+                },
+                {
+                    "text": "Call me [player_name]",
+                    "destinationNodeId": 3,
+                    "reaction": 0
+                }
+            ]
+        },
+        {
+            "nodeId": 3,
+            "text": "Nice to meet you [player_name]",
+            "options": [
+                {
+                    "text": "Exit",
+                    "destinationNodeId": -1,
+                    "reaction": 0
+                }
+            ]
+        }
+    ]
+}

@@ -53,15 +53,15 @@ public class Inventory : MonoBehaviour {
     }
 
     public int FindBullets(WeaponType weaponType, int amount) {
-        Bullets bullets = items.Find(item => item is Bullets && ((Bullets)item).type == weaponType) as Bullets;
+        Ammo ammo = items.Find(item => item is Ammo && ((Ammo)item).type == weaponType) as Ammo;
 
-        if (bullets != null) {
-            if (amount >= bullets.amount) {
-                Remove(bullets);
+        if (ammo != null) {
+            if (amount >= ammo.amount) {
+                Remove(ammo);
 
-                return bullets.amount;
+                return ammo.amount;
             } else {
-                bullets.amount -= amount;
+                ammo.amount -= amount;
 
                 return amount;
             }

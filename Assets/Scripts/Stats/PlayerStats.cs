@@ -19,12 +19,19 @@ public class PlayerStats : CharacterStats {
         EquipmentManager.instance.onWeaponChanged += OnWeaponChanged;
     }
 
+    void Update() {
+        //TEST PURPOSES
+        if (Input.GetKeyDown(KeyCode.T)) {
+            TakeDamage(20);
+        }
+    }
+
     void OnArmourChanged(Armour item) {
         if (item != null) {
-            armour.SetModifier(item.armourModifier);
+            int modifier = Mathf.CeilToInt(item.armourModifier * item.condition / 100);
+            armour.SetModifier(modifier);
             radiationResistance.SetModifier(item.radiationResistance);
-            movementSpeed.SetModifier(-item.movementReduction);
-            
+            movementSpeed.SetModifier(-item.movementReduction); 
         } else {
             armour.SetModifier(0);
             radiationResistance.SetModifier(0);
@@ -46,6 +53,7 @@ public class PlayerStats : CharacterStats {
 
     public override void TakeDamage(int damage) {
         base.TakeDamage(damage);
+
         SubscribeChange();
     }
 

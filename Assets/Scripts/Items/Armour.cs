@@ -16,4 +16,8 @@ public class Armour : Item {
             EquipmentManager.instance.EquipArmour(this);
         }
     }
+
+    public override string GetAmount() {
+        return condition + "";
+    }
 }

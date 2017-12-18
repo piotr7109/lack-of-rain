@@ -17,14 +17,15 @@ public class BulletController : MonoBehaviour {
             return;
         }
 
-        if (collider.transform.tag == "Enemy") {
-            CharacterStats targetStats = collider.transform.GetComponent<CharacterStats>();
-
-            targetStats.TakeDamage(damage);
-            Destroy(gameObject);
-        }
-
+        RecognizeTarget(collider.transform);
         hasHit = true;
         Destroy(gameObject, groundLifeTime);
+    }
+
+    void RecognizeTarget(Transform target) {
+        if (target.tag == "Enemy" || target.tag == "Player") {
+            target.GetComponent<CharacterStats>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 }

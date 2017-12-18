@@ -30,16 +30,12 @@ public class InventorySlot : MonoBehaviour {
     }
 
     void ShowAmountMark(Item item) {
-        if (item is Bullets) {
-            amountText.text = (item as Bullets).amount + "";
-            amountText.enabled = true;
-        } else {
-            amountText.enabled = false;
-        }
+        amountText.text = item.GetAmount() + "";
+        amountText.enabled = true;
     }
 
     public void OnRemoveButton() {
-        item.RemoveFromInventory();
+        item.DropItem();
     }
 
     public void UseItem() {

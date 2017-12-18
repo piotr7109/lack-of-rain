@@ -17,16 +17,8 @@ public class CharacterStats : MonoBehaviour {
         radiationLevel = 0;
     }
 
-    void Update() {
-        //TEST PURPOSES
-        if (Input.GetKeyDown(KeyCode.T)) {
-            TakeDamage(20);
-        }
-    }
-
     public virtual void Heal(UsableItem item) {
         currentHealth += item.healthRestoration;
-        Debug.Log(item.healthRestoration);
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         radiationLevel -= item.radiationReduction;
         radiationLevel = Mathf.Clamp(radiationLevel, 0, 100);

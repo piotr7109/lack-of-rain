@@ -19,6 +19,10 @@ public class Weapon : Item {
         bullets = magazineSize;
     }
 
+    public override string GetAmount() {
+        return bullets + "";
+    }
+
     public override void Use() {
         if (this.equiped) {
             EquipmentManager.instance.UnequipWeapon();
@@ -27,6 +31,11 @@ public class Weapon : Item {
             this.equiped = true;
             EquipmentManager.instance.EquipWeapon(this);
         }
+    }
+
+    public void Shoot() {
+        bullets--;
+        EquipmentManager.instance.SubscribeChange();
     }
 
     public bool Reload() {

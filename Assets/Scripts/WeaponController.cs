@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using UnityStandardAssets._2D;
 
 public class WeaponController : MonoBehaviour {
-    
+
     private float timeToFire = 0;
     private float timeToSpawnEffect = 0;
     private Transform firePoint;
     private Camera cam;
     public Weapon weapon;
+    public PlatformerCharacter2D playerGFX;
 
     private bool isReloading = false;
 
@@ -40,6 +42,10 @@ public class WeaponController : MonoBehaviour {
         }
     }
 
+    void OnWeaponChanged(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
     IEnumerator Reload() {
         isReloading = true;
 
@@ -64,10 +70,6 @@ public class WeaponController : MonoBehaviour {
             !EventSystem.current.IsPointerOverGameObject();
     }
 
-    void OnWeaponChanged(Weapon weapon) {
-        this.weapon = weapon;
-    }
-    
     void Shoot() {
         if (Time.time >= timeToSpawnEffect) {
             GameObject bullet = Instantiate(weapon.bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
@@ -81,30 +83,34 @@ public class WeaponController : MonoBehaviour {
             bullet.GetComponent<BulletController>().damage = weapon.damage;
 
             timeToSpawnEffect = Time.time + 1 / weapon.effectSpawnRate;
-            weapon.bullets--;
+            weapon.Shoot();
+
+            if (!playerGFX.m_FacingRight) {
+                bullet.transform.localScale = bullet.transform.localScale *= -1;
+            }
         }
     }
 
-   /* void Effect(Vector3 hitPos, Vector3 hitNormal) {
-        Transform trail = Instantiate(bulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
-        LineRenderer lr = trail.GetComponent<LineRenderer>();
+    /* void Effect(Vector3 hitPos, Vector3 hitNormal) {
+         Transform trail = Instantiate(bulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
+         LineRenderer lr = trail.GetComponent<LineRenderer>();
 
-        if (lr != null) {
-            lr.SetPosition(0, firePoint.position);
-            lr.SetPosition(1, hitPos);
-        }
+         if (lr != null) {
+             lr.SetPosition(0, firePoint.position);
+             lr.SetPosition(1, hitPos);
+         }
 
-        Destroy(trail.gameObject, .04f);
+         Destroy(trail.gameObject, .04f);
 
-        if (hitNormal != new Vector3(9999, 9999, 9999)) {
-            Transform hitParticle = Instantiate(hitPrefab, hitPos, Quaternion.FromToRotation(Vector3.right, hitNormal)) as Transform;
-            Destroy(hitParticle.gameObject, 1f);
-        }
+         if (hitNormal != new Vector3(9999, 9999, 9999)) {
+             Transform hitParticle = Instantiate(hitPrefab, hitPos, Quaternion.FromToRotation(Vector3.right, hitNormal)) as Transform;
+             Destroy(hitParticle.gameObject, 1f);
+         }
 
-        Transform clone = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation) as Transform;
-        clone.parent = firePoint;
-        float size = Random.Range(.6f, .9f);
-        clone.localScale = new Vector3(size, size, size);
-        Destroy(clone.gameObject, .02f);
-    }*/
+         Transform clone = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation) as Transform;
+         clone.parent = firePoint;
+         float size = Random.Range(.6f, .9f);
+         clone.localScale = new Vector3(size, size, size);
+         Destroy(clone.gameObject, .02f);
+     }*/
 }
