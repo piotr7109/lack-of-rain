@@ -10,6 +10,8 @@ public class Weapon : Item {
     public float effectSpawnRate = 1;
     public WeaponType type;
     public float reloadTime = 1f;
+    [Tooltip("Bullets spread angle in degress")]
+    public int aimSpread = 0;
     public GameObject bulletPrefab;
 
     [HideInInspector]

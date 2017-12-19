@@ -9,8 +9,7 @@ public class EnemyNpc : Interactable {
     public Weapon weapon;
     public Transform weaponTransform;
     public CharacterStats stats;
-
-    private Transform firePoint;
+    private ShootManager shootManager;
 
     void Awake() {
         enabled = false;
@@ -20,8 +19,9 @@ public class EnemyNpc : Interactable {
         base.Start();
 
         character = GetComponent<PlatformerCharacter2D>();
-        firePoint = weaponTransform.FindChild("FirePoint") as Transform;
         stats = transform.GetComponent<CharacterStats>();
+        shootManager = gameObject.AddComponent<ShootManager>();
+        shootManager.setParameters(character, weaponTransform.FindChild("FirePoint"));
     }
 
     void FixedUpdate() {
@@ -86,25 +86,9 @@ public class EnemyNpc : Interactable {
             }
         }
     }
-    private float timeToSpawnEffect = 0;
 
     void Shoot() {
-        if (Time.time >= timeToSpawnEffect) {
-            bool turnedRight = character.m_FacingRight;
-            GameObject bullet = Instantiate(weapon.bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            Vector2 direction = turnedRight ? Vector2.right : Vector2.left;
-
-            rb.AddForce(firePoint.rotation * direction * weapon.bulletSpeed * 10);
-
-            bullet.GetComponent<BulletController>().damage = weapon.damage;
-
-            timeToSpawnEffect = Time.time + 1 / weapon.effectSpawnRate;
-
-            if (!turnedRight) {
-                bullet.transform.localScale = bullet.transform.localScale *= -1;
-            }
-        }
+        shootManager.Shoot(weapon);
     }
 
     protected override void OnDrawGizmosSelected() {

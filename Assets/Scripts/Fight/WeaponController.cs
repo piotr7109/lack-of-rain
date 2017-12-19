@@ -6,15 +6,15 @@ using UnityStandardAssets._2D;
 public class WeaponController : MonoBehaviour {
 
     private float timeToFire = 0;
-    private float timeToSpawnEffect = 0;
     public Weapon weapon;
-    private Transform firePoint;
     public PlatformerCharacter2D playerGFX;
 
     private bool isReloading = false;
+    private ShootManager shootManager;
 
     void Start() {
-        firePoint = transform.FindChild("FirePoint");
+        shootManager = gameObject.AddComponent<ShootManager>();
+        shootManager.setParameters(playerGFX, transform.FindChild("FirePoint"));
 
         EquipmentManager.instance.onWeaponChanged += OnWeaponChanged;
     }
@@ -58,7 +58,7 @@ public class WeaponController : MonoBehaviour {
 
     void TryToShoot() {
         if (CheckIfCanShoot()) {
-            Shoot();
+            shootManager.Shoot(weapon);
         }
     }
 
@@ -66,25 +66,5 @@ public class WeaponController : MonoBehaviour {
         return
             weapon.bullets > 0 &&
             !EventSystem.current.IsPointerOverGameObject();
-    }
-
-    void Shoot() {
-        if (Time.time >= timeToSpawnEffect) {
-            bool turnedRight = playerGFX.m_FacingRight;
-            GameObject bullet = Instantiate(weapon.bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            Vector2 direction = turnedRight ? Vector2.right : Vector2.left;
-
-            rb.AddForce(firePoint.rotation * direction * weapon.bulletSpeed * 10);
-
-            bullet.GetComponent<BulletController>().damage = weapon.damage;
-
-            timeToSpawnEffect = Time.time + 1 / weapon.effectSpawnRate;
-            weapon.Shoot();
-
-            if (!turnedRight) {
-                bullet.transform.localScale = bullet.transform.localScale *= -1;
-            }
-        }
     }
 }

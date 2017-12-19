@@ -6,6 +6,7 @@
 
     public override void Start() {
         base.Start();
+        SetTooltipSprite(prefabsManager.talkIcon);
         enemy = GetComponent<EnemyNpc>();
     }
 
