@@ -4,9 +4,9 @@ public class Interactable : MonoBehaviour {
 
     public float radius = 3f;
 
-    Transform player;
+    protected Transform player;
 
-    void Start() {
+    public virtual void Start() {
         player = PlayerManager.instance.player.transform;
     }
 
@@ -24,7 +24,7 @@ public class Interactable : MonoBehaviour {
     public virtual void Interact() {
     }
 
-    void OnDrawGizmosSelected() {
+    protected virtual void OnDrawGizmosSelected() {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, radius);
     }

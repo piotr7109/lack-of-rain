@@ -7,15 +7,13 @@ public class WeaponController : MonoBehaviour {
 
     private float timeToFire = 0;
     private float timeToSpawnEffect = 0;
-    private Transform firePoint;
-    private Camera cam;
     public Weapon weapon;
+    private Transform firePoint;
     public PlatformerCharacter2D playerGFX;
 
     private bool isReloading = false;
 
     void Start() {
-        cam = Camera.main;
         firePoint = transform.FindChild("FirePoint");
 
         EquipmentManager.instance.onWeaponChanged += OnWeaponChanged;
@@ -72,45 +70,21 @@ public class WeaponController : MonoBehaviour {
 
     void Shoot() {
         if (Time.time >= timeToSpawnEffect) {
+            bool turnedRight = playerGFX.m_FacingRight;
             GameObject bullet = Instantiate(weapon.bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
-            Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 mouseDirection = mousePosition - firePoint.position;
-            mouseDirection.z = 0;
-            mouseDirection = mouseDirection.normalized;
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.AddForce(mouseDirection * weapon.bulletSpeed * 10);
+            Vector2 direction = turnedRight ? Vector2.right : Vector2.left;
+
+            rb.AddForce(firePoint.rotation * direction * weapon.bulletSpeed * 10);
 
             bullet.GetComponent<BulletController>().damage = weapon.damage;
 
             timeToSpawnEffect = Time.time + 1 / weapon.effectSpawnRate;
             weapon.Shoot();
 
-            if (!playerGFX.m_FacingRight) {
+            if (!turnedRight) {
                 bullet.transform.localScale = bullet.transform.localScale *= -1;
             }
         }
     }
-
-    /* void Effect(Vector3 hitPos, Vector3 hitNormal) {
-         Transform trail = Instantiate(bulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
-         LineRenderer lr = trail.GetComponent<LineRenderer>();
-
-         if (lr != null) {
-             lr.SetPosition(0, firePoint.position);
-             lr.SetPosition(1, hitPos);
-         }
-
-         Destroy(trail.gameObject, .04f);
-
-         if (hitNormal != new Vector3(9999, 9999, 9999)) {
-             Transform hitParticle = Instantiate(hitPrefab, hitPos, Quaternion.FromToRotation(Vector3.right, hitNormal)) as Transform;
-             Destroy(hitParticle.gameObject, 1f);
-         }
-
-         Transform clone = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation) as Transform;
-         clone.parent = firePoint;
-         float size = Random.Range(.6f, .9f);
-         clone.localScale = new Vector3(size, size, size);
-         Destroy(clone.gameObject, .02f);
-     }*/
 }

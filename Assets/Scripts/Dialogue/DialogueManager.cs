@@ -20,9 +20,9 @@ public class DialogueManager : MonoBehaviour {
     public Button optionPrefab;
 
     private static Dialogue dialogue;
-    private GameObject npc;
+    private Npc npc;
 
-    public void RunDialogue(string fileName, GameObject npc) {
+    public void RunDialogue(string fileName, Npc npc) {
         this.npc = npc;
         dialogue = DialogueSerialization.LoadDialogue(fileName);
         dialogueUI.SetActive(true);
@@ -35,7 +35,7 @@ public class DialogueManager : MonoBehaviour {
 
         if (nodeIndex == -1) {
             dialogueUI.SetActive(false);
-            ExecuteNpcReaction(reaction);
+            npc.reaction = reaction;
             dialogue = null;
             npc = null;
 
@@ -57,14 +57,4 @@ public class DialogueManager : MonoBehaviour {
             Destroy(child.gameObject);
         }
     }
-
-    private void ExecuteNpcReaction(NpcReaction reaction) {
-        switch (reaction) {
-            case NpcReaction.Attack:
-                Debug.Log("ATTACK!");
-                break;
-        }
-    }
 }
-
-public enum NpcReaction { None, Attack };

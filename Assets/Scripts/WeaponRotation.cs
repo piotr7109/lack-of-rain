@@ -2,8 +2,7 @@
 using UnityStandardAssets._2D;
 
 public class WeaponRotation : MonoBehaviour {
-
-    public int rotationOffset = 0;
+    
     public PlatformerCharacter2D playerGFX;
     Camera cam;
 
@@ -21,7 +20,7 @@ public class WeaponRotation : MonoBehaviour {
 
         float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
 
-        //rotZ = Mathf.Clamp(rotZ, -45, 45);
-        transform.rotation = Quaternion.Euler(0, 0, rotZ + rotationOffset);
+        rotZ = Mathf.Clamp(rotZ, -70, 70);
+        transform.rotation = Quaternion.Euler(0, 0, rotZ);
     }
 }

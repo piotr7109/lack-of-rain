@@ -23,7 +23,7 @@
                 {
                     "text": "Exit",
                     "destinationNodeId": -1,
-                    "reaction": 0
+                    "reaction": 1
                 }
             ]
         },
