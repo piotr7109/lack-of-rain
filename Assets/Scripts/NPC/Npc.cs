@@ -1,7 +1,11 @@
-﻿public class Npc : Interactable {
+﻿using UnityEngine;
+using System.Collections.Generic;
+
+public class Npc : Interactable {
 
     public string dialogueFilename;
     public NpcReaction reaction = NpcReaction.None;
+    public List<Quest> quests;
     private EnemyNpc enemy;
 
     public override void Start() {
@@ -19,10 +23,11 @@
     }
 
     void FixedUpdate() {
-        if(enemy != null && reaction == NpcReaction.Attack) {
+        if (enemy != null && reaction == NpcReaction.Attack) {
+            SetTooltipSprite(null);
             enemy.enabled = true;
         }
     }
 }
 
-public enum NpcReaction { None, Attack };
+public enum NpcReaction { Any, None, Attack };

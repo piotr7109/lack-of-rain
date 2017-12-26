@@ -6,14 +6,28 @@
             "options": [
                 {
                     "text": "You smell",
-                    "destinationNodeId": 1,
-                    "reaction": 0
+                    "destinationNodeId": 1
+                },
+				{
+                    "text": "Nothing, bye.",
+                    "destinationNodeId": -1
                 },
                 {
-                    "text": "Hello",
-                    "destinationNodeId": 2,
-                    "reaction": 0
-                }
+                    "text": "Do you have any quest for me?",
+                    "destinationNodeId": 2
+                },
+				{
+                    "text": "I have briought you an armour",
+                    "destinationNodeId": 5,
+					"questId": [0],
+					"questStatus": 1
+				},
+				{
+                    "text": "I have killed someone for you",
+                    "destinationNodeId": 5,
+					"questId": [1],
+					"questStatus": 1
+				}
             ]
         },
         {
@@ -23,34 +37,61 @@
                 {
                     "text": "Exit",
                     "destinationNodeId": -1,
-                    "reaction": 1
+                    "reaction": 2
                 }
             ]
         },
         {
             "nodeId": 2,
-            "text": "My name is [npc_name]",
+            "text": "Please check that list:",
             "options": [
                 {
-                    "text": "My name is [player_name]",
+                    "text": "Bring armour",
                     "destinationNodeId": 3,
-                    "reaction": 0
+					"questId": [0],
+					"questStatus": 0
                 },
                 {
-                    "text": "Call me [player_name]",
-                    "destinationNodeId": 3,
-                    "reaction": 0
+                    "text": "Kill someone",
+                    "destinationNodeId": 4,
+					"questId": [1],
+					"questStatus": 0
+                },
+                {
+                    "text": "Nevermind",
+                    "destinationNodeId": -1
                 }
             ]
         },
         {
             "nodeId": 3,
-            "text": "Nice to meet you [player_name]",
+            "text": "Super!",
             "options": [
                 {
                     "text": "Exit",
                     "destinationNodeId": -1,
-                    "reaction": 0
+					"questId": [0]
+                }
+            ]
+        },
+        {
+            "nodeId": 4,
+            "text": "Super!",
+            "options": [
+                {
+                    "text": "Exit",
+                    "destinationNodeId": -1,
+					"questId": [1]
+                }
+            ]
+        },
+        {
+            "nodeId": 5,
+            "text": "Thank you so much!",
+            "options": [
+                {
+                    "text": "No problem",
+                    "destinationNodeId": -1
                 }
             ]
         }

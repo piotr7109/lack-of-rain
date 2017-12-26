@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using UnityStandardAssets._2D;
 
-public class EnemyNpc : Interactable {
+public class EnemyNpc : MonoBehaviour {
 
     private PlatformerCharacter2D character;
 
+    protected Transform player;
+
     public float chaseRadius = 25;
+    public float attackRadius = 15;
+    public float meleeAttackSpeed = 5f;
+    public float meleeRadius = 1.2f;
     public Weapon weapon;
     public Transform weaponTransform;
     public CharacterStats stats;
@@ -15,8 +20,8 @@ public class EnemyNpc : Interactable {
         enabled = false;
     }
 
-    public override void Start() {
-        base.Start();
+    void Start() {
+        player = PlayerManager.instance.player.transform;
 
         character = GetComponent<PlatformerCharacter2D>();
         stats = transform.GetComponent<CharacterStats>();
@@ -33,10 +38,18 @@ public class EnemyNpc : Interactable {
     void ChaseAndAttack() {
         float distance = Vector2.Distance(player.position, transform.position);
 
-        if (distance <= radius) {
-            Attack();
-        } else if (distance <= chaseRadius) {
-            Chase();
+        if (weapon != null) {
+            if (distance <= attackRadius) {
+                Attack();
+            } else if (distance <= chaseRadius) {
+                Chase();
+            }
+        } else {
+            if (distance <= meleeRadius) {
+                AttackMelee();
+            } else if (distance <= chaseRadius) {
+                Chase();
+            }
         }
 
         if (distance <= chaseRadius) {
@@ -75,6 +88,7 @@ public class EnemyNpc : Interactable {
     }
 
     private float timeToFire = 0;
+    private float timeToMeleeAttack = 0;
 
     void Attack() {
         if (weapon != null) {
@@ -91,12 +105,18 @@ public class EnemyNpc : Interactable {
         shootManager.Shoot(weapon);
     }
 
-    protected override void OnDrawGizmosSelected() {
-        base.OnDrawGizmosSelected();
+    void AttackMelee() {
+        if (Time.time > timeToMeleeAttack) {
+            timeToMeleeAttack = Time.time + 1 / meleeAttackSpeed;
+        }
+    }
 
+    void OnDrawGizmosSelected() {
         Gizmos.color = Color.gray;
         Gizmos.DrawWireSphere(transform.position, chaseRadius);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, meleeRadius);
     }
 }

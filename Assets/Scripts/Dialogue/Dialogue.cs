@@ -17,7 +17,7 @@ public class Dialogue {
     }
 
     public void AddOption(string text, DialogueNode node, DialogueNode dest) {
-        if (!nodes.Contains(dest)) {
+        /*if (!nodes.Contains(dest)) {
             AddNode(dest);
         }
 
@@ -28,6 +28,6 @@ public class Dialogue {
         int destNodeId = dest != null ? dest.nodeId : -1;
         DialogueOption option = new DialogueOption(text, destNodeId);
 
-        node.options.Add(option);
+        node.options.Add(option);*/
     }
 }

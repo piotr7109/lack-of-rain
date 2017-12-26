@@ -9,7 +9,6 @@ public class InventoryUI : MonoBehaviour {
 
     InventorySlot[] slots;
 
-    // Use this for initialization
     void Start() {
         inventory = Inventory.instance;
         inventory.onItemChangedCallback += UpdateUI;
@@ -17,15 +16,28 @@ public class InventoryUI : MonoBehaviour {
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
     }
 
-    // Update is called once per frame
     void Update() {
         if (Input.GetButtonDown("Inventory")) {
-            inventoryUI.SetActive(!inventoryUI.activeSelf);
+            if (inventoryUI.activeSelf) {
+                CloseInventory();
+            } else {
+                OpenInventory();
+            }
         }
 
-        if(Input.GetButtonDown("Cancel")) {
-            inventoryUI.SetActive(false);
+        if (Input.GetButtonDown("Cancel")) {
+            CloseInventory();
         }
+    }
+
+    void OpenInventory() {
+        TimeManager.instance.StopTime();
+        inventoryUI.SetActive(true);
+    }
+
+    void CloseInventory() {
+        TimeManager.instance.RestoreTime();
+        inventoryUI.SetActive(false);
     }
 
     void UpdateUI() {

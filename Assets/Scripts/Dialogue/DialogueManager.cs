@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class DialogueManager : MonoBehaviour {
 
@@ -23,6 +24,7 @@ public class DialogueManager : MonoBehaviour {
     private Npc npc;
 
     public void RunDialogue(string fileName, Npc npc) {
+        TimeManager.instance.StopTime();
         this.npc = npc;
         dialogue = DialogueSerialization.LoadDialogue(fileName);
         dialogueUI.SetActive(true);
@@ -37,7 +39,7 @@ public class DialogueManager : MonoBehaviour {
             dialogueUI.SetActive(false);
             npc.reaction = reaction;
             dialogue = null;
-            npc = null;
+            TimeManager.instance.RestoreTime();
 
             return;
         }
@@ -46,10 +48,64 @@ public class DialogueManager : MonoBehaviour {
         dialogueText.text = node.text;
 
         node.options.ForEach(option => {
-            Button optButton = Instantiate(optionPrefab, optionsPanel) as Button;
-            optButton.GetComponentInChildren<Text>().text = option.text;
-            optButton.onClick.AddListener(delegate { RunNode(option.destinationNodeId, option.reaction); });
+            if (CheckIfCanShowOption(option)) {
+                Button optButton = Instantiate(optionPrefab, optionsPanel) as Button;
+                optButton.GetComponentInChildren<Text>().text = option.text;
+                optButton.onClick.AddListener(delegate {
+                    RunNode(option.destinationNodeId, option.reaction);
+
+                    int questId = option.getQuestId();
+
+                    if (questId != -1) {
+                        if (option.destinationNodeId == -1) {
+                            if (option.questStatus == QuestStatus.NONE) {
+                                QuestManager.instance.AddQuest(npc.quests[questId]);
+                            }
+                        }
+
+                        if (option.questStatus == QuestStatus.IN_PROGRESS) {
+                            if (npc.quests[questId].IsFinnished()) {
+                                QuestManager.instance.FinishQuest(npc.quests[questId]);
+                            } else {
+                                Debug.Log("GET AWAY AND DO YOUR JOB!");
+                            }
+                        }
+                    }
+                });
+            }
         });
+    }
+
+    private bool CheckIfCanShowOption(DialogueOption option) {
+        if (option.excludedReactions.Count > 0) {
+            List<NpcReaction> excluded = option.excludedReactions.FindAll(r => r == npc.reaction);
+            if (excluded.Count > 0) {
+                return false;
+            }
+        }
+
+        if (option.getQuestId() != -1) {
+            int questId = option.getQuestId();
+            if (option.questStatus == npc.quests[questId].status) {
+                if (option.questStatus == QuestStatus.IN_PROGRESS) {
+                    return npc.quests[questId].IsFinnished();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        if (option.reactionTrigger == NpcReaction.Any) {
+            return true;
+        }
+
+        if (option.reactionTrigger == npc.reaction) {
+            return true;
+        }
+
+        return false;
     }
 
     private void CleanOptionsPanel() {
