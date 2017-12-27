@@ -12,7 +12,6 @@ public class TextHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     void Start() {
         text = GetComponent<Text>();
         originalColor = text.color;
-        Debug.Log(text);
     }
 
     public void OnPointerEnter(PointerEventData eventData) {

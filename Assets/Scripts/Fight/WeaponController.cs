@@ -14,7 +14,7 @@ public class WeaponController : MonoBehaviour {
 
     void Start() {
         shootManager = gameObject.AddComponent<ShootManager>();
-        shootManager.setParameters(playerGFX, transform.FindChild("FirePoint"));
+        shootManager.setParameters(playerGFX, transform.Find("FirePoint"));
 
         EquipmentManager.instance.onWeaponChanged += OnWeaponChanged;
     }

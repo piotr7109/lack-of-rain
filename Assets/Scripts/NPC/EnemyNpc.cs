@@ -26,7 +26,7 @@ public class EnemyNpc : MonoBehaviour {
         character = GetComponent<PlatformerCharacter2D>();
         stats = transform.GetComponent<CharacterStats>();
         shootManager = gameObject.AddComponent<ShootManager>();
-        shootManager.setParameters(character, weaponTransform.FindChild("FirePoint"));
+        shootManager.setParameters(character, weaponTransform.Find("FirePoint"));
     }
 
     void FixedUpdate() {

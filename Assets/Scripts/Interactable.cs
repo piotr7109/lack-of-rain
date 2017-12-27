@@ -31,10 +31,12 @@ public class Interactable : MonoBehaviour {
         interactionTooltip.GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
-    void Update() {
-        float distance = Vector2.Distance(player.position, transform.position);
+    protected float distanceToPlayer = int.MaxValue;
 
-        if (distance <= radius) {
+    void Update() {
+        distanceToPlayer = Vector2.Distance(player.position, transform.position);
+
+        if (distanceToPlayer <= radius) {
             interactionTooltip.SetActive(true);
 
             if (Input.GetButtonDown("Action")) {

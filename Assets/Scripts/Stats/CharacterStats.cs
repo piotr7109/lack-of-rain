@@ -3,8 +3,8 @@
 public class CharacterStats : MonoBehaviour {
 
     public int maxHealth = 100;
-    public int currentHealth { get; private set; }
-    public int radiationLevel { get; private set; }
+    public int currentHealth { get; set; }
+    public int radiationLevel { get; set; }
 
     public Stat damage;
 
@@ -22,6 +22,10 @@ public class CharacterStats : MonoBehaviour {
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         radiationLevel -= item.radiationReduction;
         radiationLevel = Mathf.Clamp(radiationLevel, 0, 100);
+    }
+
+    public virtual void IncreaseRadiationLevel(int gamma) {
+        radiationLevel += gamma;
     }
 
     public virtual void TakeDamage(int damage) {

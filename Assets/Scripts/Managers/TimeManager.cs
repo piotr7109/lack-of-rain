@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class TimeManager : MonoBehaviour {
 
@@ -13,7 +12,6 @@ public class TimeManager : MonoBehaviour {
 
     #endregion
 
-
     private float timeScale = 1f;
 	
     public void StopTime() {
@@ -25,23 +23,12 @@ public class TimeManager : MonoBehaviour {
     }
 
     public void ResetTime() {
+        timeScale = 1f;
         Time.timeScale = 1f;
     }
 
     public void SlowDownTime(float _timeScale) {
         timeScale = _timeScale;
         Time.timeScale = _timeScale;
-    }
-
-    public void DrunkEffect() {
-        StartCoroutine(MakeDrunkEffect());
-    }
-
-    IEnumerator MakeDrunkEffect() {
-        SlowDownTime(.5f);
-
-        yield return new WaitForSeconds(2f);
-
-        ResetTime();
     }
 }

@@ -4,6 +4,7 @@ public class Quest : MonoBehaviour {
 
     public string title;
     public string description;
+    public QuestReward reward;
     [HideInInspector]
     public Npc npc;
     [HideInInspector]
