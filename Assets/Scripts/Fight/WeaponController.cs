@@ -7,6 +7,7 @@ public class WeaponController : MonoBehaviour {
 
     private float timeToFire = 0;
     public Weapon weapon;
+    public Transform firePoint;
     public PlatformerCharacter2D playerGFX;
 
     private bool isReloading = false;
@@ -14,7 +15,7 @@ public class WeaponController : MonoBehaviour {
 
     void Start() {
         shootManager = gameObject.AddComponent<ShootManager>();
-        shootManager.setParameters(playerGFX, transform.Find("FirePoint"));
+        shootManager.setParameters(playerGFX, firePoint);
 
         EquipmentManager.instance.onWeaponChanged += OnWeaponChanged;
     }

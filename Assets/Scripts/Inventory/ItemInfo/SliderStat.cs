@@ -6,7 +6,7 @@ public class SliderStat : MonoBehaviour {
     private Text textValue;
     private Slider sliderValue;
 
-    void Start() {
+    void Awake() {
         textValue = transform.Find("Value").GetComponent<Text>();
         sliderValue = transform.Find("Slider").GetComponent<Slider>();
     }
