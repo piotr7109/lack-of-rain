@@ -7,7 +7,6 @@ public class CharacterStats : MonoBehaviour {
     public int radiationLevel { get; set; }
 
     public Stat damage;
-
     public Stat armour;
     public Stat radiationResistance;
     public Stat movementSpeed;

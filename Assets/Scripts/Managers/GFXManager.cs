@@ -17,11 +17,13 @@ public class GFXManager : MonoBehaviour {
 
     private PostProcessingProfile postProcessingProfile;
     private Camera cam;
+    private CameraPerlinShake cameraShake;
     private TimeManager timeManager;
 
     void Start() {
         cam = Camera.main;
         postProcessingProfile = cam.GetComponent<PostProcessingBehaviour>().profile;
+        cameraShake = cam.GetComponent<CameraPerlinShake>();
         timeManager = TimeManager.instance;
     }
 
@@ -66,5 +68,17 @@ public class GFXManager : MonoBehaviour {
 
         settings.intensity = level;
         postProcessingProfile.vignette.settings = settings;
+    }
+
+    public void CameraShakeEffect(float duration) {
+        StartCoroutine(ShakeCamera(duration));
+    }
+
+    IEnumerator ShakeCamera(float duration) {
+        cameraShake.Enable();
+
+        yield return new WaitForSeconds(duration);
+
+        cameraShake.Disable();
     }
 }

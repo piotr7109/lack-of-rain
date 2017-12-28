@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour {
+public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     public Image icon;
     public Button removeButton;
     public Image equipMark;
     public Text amountText;
+    private ItemInfoUI itemInfoUI;
 
     Item item;
+
+    void Start() {
+        itemInfoUI = ItemInfoUI.instance;
+    }
 
     public void AddItem(Item newItem) {
         item = newItem;
@@ -42,5 +48,15 @@ public class InventorySlot : MonoBehaviour {
         if (item != null) {
             item.Use();
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        if (item != null) {
+            itemInfoUI.ShowInfo(item, transform.position);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        itemInfoUI.HideInfo();
     }
 }

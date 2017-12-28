@@ -70,6 +70,10 @@ public class Inventory : MonoBehaviour {
         return 0;
     }
 
+    public Item FindItem(string itemName) {
+        return items.Find(item => item.name == itemName);
+    }
+
     public void SubscribeChange() {
         if (onItemChangedCallback != null) {
             onItemChangedCallback.Invoke();

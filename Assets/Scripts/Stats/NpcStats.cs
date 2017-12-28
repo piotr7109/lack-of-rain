@@ -3,10 +3,12 @@ using System.Collections.Generic;
 
 public class NpcStats : CharacterStats {
     public List<GameObject> items;
+    public int experienceGained = 100;
 
     public override void Die() {
         base.Die();
         DropItems();
+        LevelsManager.instance.AddExperience(experienceGained);
         Destroy(gameObject/*, 2f*/);
     }
 

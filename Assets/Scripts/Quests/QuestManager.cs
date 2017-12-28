@@ -21,6 +21,7 @@ public class QuestManager : MonoBehaviour {
     }
 
     public void FinishQuest(Quest quest) {
+        quest.GetReward();
         quest.status = QuestStatus.FINISHED;
     }
 

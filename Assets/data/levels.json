@@ -1,0 +1,19 @@
+{
+	"levels": [
+		{
+			"experienceRequired": 0,
+			"healthBonus": 0,
+			"radiationResistenceBonus": 0
+		},
+		{
+			"experienceRequired": 500,
+			"healthBonus": 10,
+			"radiationResistenceBonus": 1
+		},
+		{
+			"experienceRequired": 1000,
+			"healthBonus": 10,
+			"radiationResistenceBonus": 2
+		}
+	]
+}

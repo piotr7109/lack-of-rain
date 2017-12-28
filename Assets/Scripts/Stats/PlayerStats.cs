@@ -32,7 +32,7 @@ public class PlayerStats : CharacterStats {
     void HealthEffects() {
         float healthPercentage = (float)currentHealth / (float)maxHealth;
         
-        gfxManager.VignetteEffect(Mathf.Clamp(-healthPercentage + 0.8f, 0, 1f));
+        gfxManager.VignetteEffect(Mathf.Clamp01(-healthPercentage + 0.8f));
     }
 
     void OnArmourChanged(Armour item) {
@@ -51,7 +51,7 @@ public class PlayerStats : CharacterStats {
     }
 
     void OnWeaponChanged(Weapon item) {
-        damage.SetModifier(item != null ? item.damage : 0);
+        damage.SetBaseValue(item != null ? item.damage : 0);
         SubscribeChange();
     }
 
