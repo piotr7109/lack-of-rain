@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StatsUI : MonoBehaviour {
 
@@ -19,8 +17,8 @@ public class StatsUI : MonoBehaviour {
     }
 
     void UpdateUI() {
-        health.UpdateStat(stats.currentHealth + "/" + stats.maxHealth, 0);
-        damage.UpdateStat(stats.damage.GetBase() + "", stats.damage.GetModifier());
+        health.UpdateStat(stats.currentHealth + "/" + stats.maxHealth);
+        damage.UpdateStat(stats.damage.GetBase() + "");
         armour.UpdateStat(stats.armour.GetBase() + "", stats.armour.GetModifier());
         gammaResistance.UpdateStat(stats.radiationResistance.GetBase() + "", stats.radiationResistance.GetModifier());
         movementSpeed.UpdateStat(stats.movementSpeed.GetBase() + "", stats.movementSpeed.GetModifier());

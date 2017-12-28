@@ -11,12 +11,20 @@ public class StatUI : MonoBehaviour {
 
     void Awake() {
         textValue = transform.Find("Value").GetComponent<Text>();
-        bonusValue = transform.Find("Bonus").GetComponent<Text>();
+
+        Transform bonusTransform = transform.Find("Bonus");
+
+        if (bonusTransform != null) {
+            bonusValue = bonusTransform.GetComponent<Text>();
+        }
     }
 
-    public void UpdateStat(string value, float bonus) {
+    public void UpdateStat(string value, float bonus = 0) {
         textValue.text = value;
-        bonusValue.text = bonus >= 0 ? ("+" + bonus) : ("" + bonus);
-        bonusValue.color = bonus >= 0 ? positive : negative;
+
+        if (bonusValue != null) {
+            bonusValue.text = bonus >= 0 ? ("+" + bonus) : ("" + bonus);
+            bonusValue.color = bonus >= 0 ? positive : negative;
+        }
     }
 }

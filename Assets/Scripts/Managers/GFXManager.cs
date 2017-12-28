@@ -42,6 +42,20 @@ public class GFXManager : MonoBehaviour {
         postProcessingProfile.motionBlur.enabled = false;
     }
 
+    public void DrugEffect() {
+        StartCoroutine(MakeDrugEffect());
+    }
+
+    IEnumerator MakeDrugEffect() {
+        postProcessingProfile.chromaticAberration.enabled = true;
+        postProcessingProfile.bloom.enabled = true;
+
+        yield return new WaitForSeconds(10f);
+
+        postProcessingProfile.chromaticAberration.enabled = false;
+        postProcessingProfile.bloom.enabled = false;
+    }
+
     private HashSet<float> ids = new HashSet<float>();
 
     public void GrainEffect(float level, float instanceId = -1) {
