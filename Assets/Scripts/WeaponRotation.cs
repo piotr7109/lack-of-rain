@@ -7,7 +7,6 @@ public class WeaponRotation : MonoBehaviour {
     Camera cam;
 
     public Transform playerBody;
-    public Transform firePoint;
 
     void Awake() {
         cam = Camera.main;
@@ -17,7 +16,7 @@ public class WeaponRotation : MonoBehaviour {
         Vector3 difference = cam.ScreenToWorldPoint(Input.mousePosition) - playerBody.transform.position;
         difference.y -= .5f;
         difference.Normalize();
-
+        SetPlayerDirection(difference.x > 0);
 
         if (!playerGFX.m_FacingRight) {
             difference *= -1;
@@ -25,7 +24,21 @@ public class WeaponRotation : MonoBehaviour {
 
         float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
 
-        rotZ = Mathf.Clamp(rotZ, -70, 70) + 90 * (!playerGFX.m_FacingRight ? -1 : 1);
+        rotZ = Mathf.Clamp(rotZ, -70, 70) + 90 * (playerGFX.m_FacingRight ? 1 : -1);
         playerBody.eulerAngles = new Vector3(0, 0, rotZ);
+    }
+
+    void SetPlayerDirection(bool right) {
+        Vector3 scale = playerGFX.transform.localScale;
+
+        if (right) {
+            scale.x = Mathf.Abs(scale.x);
+            playerGFX.m_FacingRight = true;
+        } else {
+            scale.x = Mathf.Abs(scale.x) * -1;
+            playerGFX.m_FacingRight = false;
+        }
+
+        playerGFX.transform.localScale = scale;
     }
 }

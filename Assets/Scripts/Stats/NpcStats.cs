@@ -5,11 +5,18 @@ public class NpcStats : CharacterStats {
     public List<GameObject> items;
     public int experienceGained = 100;
 
+    private Animator anim;
+
+    void Start() {
+        anim = GetComponent<Animator>();
+    }
+
     public override void Die() {
         base.Die();
         DropItems();
         LevelsManager.instance.AddExperience(experienceGained);
-        Destroy(gameObject/*, 2f*/);
+        anim.SetBool("Died", true);
+        Destroy(gameObject, 3f);
     }
 
     void DropItems() {

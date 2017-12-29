@@ -16,12 +16,17 @@ public class LevelsManager : MonoBehaviour {
 
     public Transform levelUpParticles;
     private List<Level> levels;
-    private int currentLevel = 0;
-    private int experience = 0;
+    public int currentLevel { get; private set; }
+    public int experience { get; private set; }
     private PlayerStats stats;
     private GameObject player;
 
+    public delegate void onExperienceChangedCallback();
+    public onExperienceChangedCallback onExperienceChanged;
+
     void Start() {
+        currentLevel = 0;
+        experience = 0;
         levels = LevelsSerialization.LoadLevelsData();
         stats = PlayerStats.instance;
         player = PlayerManager.instance.player;
@@ -33,6 +38,8 @@ public class LevelsManager : MonoBehaviour {
         if (CanLevelUp()) {
             LevelUp();
         }
+
+        SubscribeChange();
     }
 
     private void LevelUp() {
@@ -58,5 +65,11 @@ public class LevelsManager : MonoBehaviour {
 
     private bool CanLevelUp() {
         return levels.Count > currentLevel + 1 && levels[currentLevel + 1].experienceRequired <= experience;
+    }
+
+    void SubscribeChange() {
+        if (onExperienceChanged != null) {
+            onExperienceChanged.Invoke();
+        }
     }
 }

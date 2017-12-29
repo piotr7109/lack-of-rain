@@ -12,9 +12,14 @@ public class EnemyNpc : MonoBehaviour {
     public float meleeAttackSpeed = 5f;
     public float meleeRadius = 1.2f;
     public Weapon weapon;
-    public Transform weaponTransform;
+    public Transform firePoint;
+    public Transform characterBody;
     public CharacterStats stats;
     private ShootManager shootManager;
+
+    Animator anim;
+
+    public bool died = false;
 
     void Awake() {
         enabled = false;
@@ -22,15 +27,16 @@ public class EnemyNpc : MonoBehaviour {
 
     void Start() {
         player = PlayerManager.instance.player.transform;
+        anim = GetComponent<Animator>();
 
         character = GetComponent<PlatformerCharacter2D>();
         stats = transform.GetComponent<CharacterStats>();
         shootManager = gameObject.AddComponent<ShootManager>();
-        shootManager.setParameters(character, weaponTransform.Find("FirePoint"));
+        shootManager.setParameters(character, firePoint);
     }
 
-    void FixedUpdate() {
-        if (enabled) {
+    void Update() {
+        if (enabled && !anim.GetBool("Died")) {
             ChaseAndAttack();
         }
     }
@@ -58,20 +64,37 @@ public class EnemyNpc : MonoBehaviour {
     }
 
     void FacePlayer() {
-        Vector3 difference = player.position - transform.position;
+        Vector3 difference = player.position - characterBody.position;
+        difference.y -= .5f;
         difference.Normalize();
 
         int direction = difference.x >= 0 ? 1 : -1;
 
         character.m_FacingRight = difference.x >= 0;
 
-        character.transform.localScale = new Vector2(Mathf.Abs(character.transform.localScale.x) * direction, character.transform.localScale.y);
+        SetCharacterDirection(difference.x >= 0);
+        
         difference *= direction;
 
-        float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg + 90 * (character.m_FacingRight ? 1 : -1);
 
-        weaponTransform.rotation = Quaternion.Euler(0, 0, rotZ);
+        characterBody.eulerAngles = new Vector3(0, 0, rotZ);
     }
+
+    void SetCharacterDirection(bool right) {
+        Vector3 scale = character.transform.localScale;
+
+        if (right) {
+            scale.x = Mathf.Abs(scale.x);
+            character.m_FacingRight = true;
+        } else {
+            scale.x = Mathf.Abs(scale.x) * -1;
+            character.m_FacingRight = false;
+        }
+
+        character.transform.localScale = scale;
+    }
+
 
     private Vector2 prevPos;
 
