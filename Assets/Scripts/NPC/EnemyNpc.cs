@@ -19,8 +19,6 @@ public class EnemyNpc : MonoBehaviour {
 
     Animator anim;
 
-    public bool died = false;
-
     void Awake() {
         enabled = false;
     }
@@ -94,14 +92,13 @@ public class EnemyNpc : MonoBehaviour {
 
         character.transform.localScale = scale;
     }
-
-
+    
     private Vector2 prevPos;
 
     void Chase() {
         int direction = player.position.x > transform.position.x ? 1 : -1;
 
-        character.Move(stats.movementSpeed.GetValue() * direction, false, false);
+        character.Move(direction, false, false);
 
         if (prevPos.x == transform.position.x) {
             character.Move(0, false, true);

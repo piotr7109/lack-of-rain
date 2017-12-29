@@ -12,11 +12,13 @@ public class NpcStats : CharacterStats {
     }
 
     public override void Die() {
-        base.Die();
-        DropItems();
-        LevelsManager.instance.AddExperience(experienceGained);
-        anim.SetBool("Died", true);
-        Destroy(gameObject, 3f);
+        if (!anim.GetBool("Died")) {
+            base.Die();
+            DropItems();
+            LevelsManager.instance.AddExperience(experienceGained);
+            anim.SetBool("Died", true);
+            Destroy(gameObject, 3f);
+        }
     }
 
     void DropItems() {

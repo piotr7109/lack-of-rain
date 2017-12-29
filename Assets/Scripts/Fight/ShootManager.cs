@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using UnityStandardAssets._2D;
+using System.Collections;
 
 public class ShootManager : MonoBehaviour {
 
     private PlatformerCharacter2D character;
     private Transform firePoint;
+    private GameObject muzzleFlash;
 
     public void setParameters(PlatformerCharacter2D character, Transform firePoint) {
         this.character = character;
         this.firePoint = firePoint;
+
+        muzzleFlash = firePoint.Find("MuzzleFlash").gameObject;
     }
 
     private float timeToSpawnEffect = 0;
@@ -28,10 +32,27 @@ public class ShootManager : MonoBehaviour {
 
             timeToSpawnEffect = Time.time + 1 / weapon.effectSpawnRate;
             weapon.Shoot();
+            MakeEffects();
 
             if (!turnedRight) {
                 bullet.transform.localScale = bullet.transform.localScale *= -1;
             }
         }
+    }
+
+    void MakeEffects() {
+        float random = Random.Range(0f, 1f);
+
+        if (random > .3f) {
+            StartCoroutine(MuzzleFlashEffect());
+        }
+    }
+
+    IEnumerator MuzzleFlashEffect() {
+        muzzleFlash.SetActive(true);
+
+        yield return new WaitForSeconds(.1f);
+
+        muzzleFlash.SetActive(false);
     }
 }

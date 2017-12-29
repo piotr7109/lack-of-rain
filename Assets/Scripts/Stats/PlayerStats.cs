@@ -47,6 +47,8 @@ public class PlayerStats : CharacterStats {
             movementSpeed.SetModifier(0);
         }
 
+        character.m_MaxSpeed = movementSpeed.GetValue();
+
         SubscribeChange();
     }
 
@@ -83,7 +85,7 @@ public class PlayerStats : CharacterStats {
 
                 SubscribeChange();
 
-                yield return new WaitForSeconds(radiationResistance.GetValue() / ((float)radiationLevel / 50));
+                yield return new WaitForSeconds(radiationResistance.GetValue() / ((float)radiationLevel / 25));
             } else {
                 yield return new WaitForSeconds(1);
             }

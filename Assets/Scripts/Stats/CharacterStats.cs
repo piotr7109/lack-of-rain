@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets._2D;
 
 public class CharacterStats : MonoBehaviour {
 
@@ -11,9 +12,13 @@ public class CharacterStats : MonoBehaviour {
     public Stat radiationResistance;
     public Stat movementSpeed;
 
+    protected PlatformerCharacter2D character;
+
     public void Awake() {
         currentHealth = maxHealth;
         radiationLevel = 0;
+        character = GetComponent<PlatformerCharacter2D>();
+        character.m_MaxSpeed = movementSpeed.GetValue();
     }
 
     public virtual void Heal(UsableItem item) {
