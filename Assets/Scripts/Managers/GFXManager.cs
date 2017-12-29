@@ -25,6 +25,16 @@ public class GFXManager : MonoBehaviour {
         postProcessingProfile = cam.GetComponent<PostProcessingBehaviour>().profile;
         cameraShake = cam.GetComponent<CameraPerlinShake>();
         timeManager = TimeManager.instance;
+        SetUp();
+    }
+
+    void SetUp() {
+        postProcessingProfile.motionBlur.enabled = false;
+        postProcessingProfile.chromaticAberration.enabled = false;
+        postProcessingProfile.bloom.enabled = false;
+        GrainEffect(0);
+        VignetteEffect(0);
+        ChangeSaturation(1f);
     }
 
 
@@ -94,5 +104,12 @@ public class GFXManager : MonoBehaviour {
         yield return new WaitForSeconds(duration);
 
         cameraShake.Disable();
+    }
+
+    public void ChangeSaturation(float level) {
+        ColorGradingModel.Settings settings = postProcessingProfile.colorGrading.settings;
+
+        settings.basic.saturation = level;
+        postProcessingProfile.colorGrading.settings = settings;
     }
 }

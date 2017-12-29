@@ -97,6 +97,8 @@ public class PlayerStats : CharacterStats {
     }
 
     private void SubscribeChange() {
+        gfxManager.ChangeSaturation(-((float)radiationLevel / 100) + 1);
+
         if (onStatsChangedCallback != null) {
             onStatsChangedCallback.Invoke();
         }

@@ -25,7 +25,7 @@ public class CharacterStats : MonoBehaviour {
         currentHealth += item.healthRestoration;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         radiationLevel -= item.radiationReduction;
-        radiationLevel = Mathf.Clamp(radiationLevel, 0, 100);
+        radiationLevel = Mathf.Clamp(radiationLevel, 0, int.MaxValue);
     }
 
     public virtual void IncreaseRadiationLevel(int gamma) {

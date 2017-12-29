@@ -2,11 +2,13 @@
 using UnityStandardAssets._2D;
 
 public class WeaponRotation : MonoBehaviour {
-    
+
     public PlatformerCharacter2D playerGFX;
     Camera cam;
 
     public Transform playerBody;
+
+    private float initialRotation = 90;
 
     void Awake() {
         cam = Camera.main;
@@ -24,7 +26,7 @@ public class WeaponRotation : MonoBehaviour {
 
         float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
 
-        rotZ = Mathf.Clamp(rotZ, -70, 70) + 90 * (playerGFX.m_FacingRight ? 1 : -1);
+        rotZ = Mathf.Clamp(rotZ, -70, 70) + initialRotation * (playerGFX.m_FacingRight ? 1 : -1);
         playerBody.eulerAngles = new Vector3(0, 0, rotZ);
     }
 
