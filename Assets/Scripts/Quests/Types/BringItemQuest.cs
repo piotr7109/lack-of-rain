@@ -1,28 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Bring Item Quest", menuName = "Inventory/Quests/Bring Item")]
 public class BringItemQuest : Quest {
 
     public Item item;
-    private Inventory inventory;
-
-    protected override void Start() {
-        base.Start();
-
-        inventory = Inventory.instance;
-    }
 
     public override bool IsFinnished() {
-        return inventory.FindItem(item.name) != null;
+        return Inventory.instance.FindItem(item.name) != null;
     }
 
     public override void GetReward() {
         base.GetReward();
 
-        inventory.FindItem(item.name).RemoveFromInventory();
+        Inventory.instance.FindItem(item.name).RemoveFromInventory();
 
-        levelsManager.AddExperience(reward.experience);
+        LevelsManager.instance.AddExperience(reward.experience);
     }
 
 }

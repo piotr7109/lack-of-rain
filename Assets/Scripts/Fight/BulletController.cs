@@ -26,8 +26,6 @@ public class BulletController : MonoBehaviour {
         if (target.tag == "Enemy" || target.tag == "Player") {
             target.GetComponent<CharacterStats>().TakeDamage(damage);
             Destroy(gameObject);
-
-            Debug.Log(target.gameObject.name);
         }
     }
 }

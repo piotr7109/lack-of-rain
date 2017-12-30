@@ -12,6 +12,13 @@ public class Npc : Interactable {
         base.Start();
         SetTooltipSprite(prefabsManager.talkIcon);
         enemy = GetComponent<EnemyNpc>();
+        CloneQuests();
+    }
+
+    void CloneQuests() {
+        for (int i = 0; i < quests.Count; i++) {
+            quests[i] = Instantiate(quests[i]);
+        }
     }
 
     public override void Interact() {
