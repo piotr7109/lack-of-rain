@@ -5,19 +5,18 @@ public class CharacterAnimator : MonoBehaviour {
 
     public GameObject weaponGameObject;
 
-    Animator anim;
+    public Animator bodyAnim;
     EquipmentManager equipmentManager;
 
     void Start() {
         equipmentManager = EquipmentManager.instance;
         equipmentManager.onWeaponChanged += UpdateWeapon;
-        anim = GetComponent<Animator>();
     }
 
     void UpdateWeapon(Weapon weapon) {
         bool hasWeapon = weapon != null;
 
-        anim.SetBool("HasWeapon", hasWeapon);
+        bodyAnim.SetBool("HasWeapon", hasWeapon);
         StartCoroutine(ShowWeapon(hasWeapon));
     }
 
