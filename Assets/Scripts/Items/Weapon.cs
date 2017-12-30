@@ -50,5 +50,5 @@ public class Weapon : Item {
     }
 }
 
-public enum WeaponType { Pistol, MachineGun };
+public enum WeaponType { Pistol = 1, MachineGun = 2 };
 

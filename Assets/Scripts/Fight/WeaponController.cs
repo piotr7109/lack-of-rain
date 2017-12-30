@@ -13,6 +13,9 @@ public class WeaponController : MonoBehaviour {
     private bool isReloading = false;
     private ShootManager shootManager;
 
+    public delegate void OnReloading(float reloadTime);
+    public OnReloading onReloading;
+
     void Start() {
         shootManager = gameObject.AddComponent<ShootManager>();
         shootManager.setParameters(playerGFX, firePoint);
@@ -49,6 +52,7 @@ public class WeaponController : MonoBehaviour {
         isReloading = true;
 
         if (weapon.Reload()) {
+            onReloading.Invoke(weapon.reloadTime);
             yield return new WaitForSeconds(weapon.reloadTime);
         } else {
             yield return null;
