@@ -25,6 +25,7 @@ public class CharacterAnimator : MonoBehaviour {
         equipmentManager = EquipmentManager.instance;
         equipmentManager.onWeaponChanged += UpdateWeapon;
         weaponController.onReloading += ReloadWeapon;
+        UpdateWeapon(EquipmentManager.instance.weapon);
     }
 
     void UpdateWeapon(Weapon weapon) {
