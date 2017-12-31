@@ -14,6 +14,7 @@ public class PlayerStats : CharacterStats {
 
     public delegate void OnStatsChanged();
     public OnStatsChanged onStatsChangedCallback;
+    public CharacterAnimator characterAnimator;
     private GFXManager gfxManager;
 
     void Start() {
@@ -27,6 +28,10 @@ public class PlayerStats : CharacterStats {
 
     void Update() {
         HealthEffects();
+
+        if(Input.GetKeyDown(KeyCode.T)) {
+            TakeDamage(9999);
+        }
     }
 
     void HealthEffects() {
@@ -94,6 +99,7 @@ public class PlayerStats : CharacterStats {
 
     public override void Die() {
         base.Die();
+        characterAnimator.Die();
     }
 
     private void SubscribeChange() {

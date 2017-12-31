@@ -13,6 +13,7 @@ public class CharacterAnimator : MonoBehaviour {
     public GameObject rightArmIk;
 
     public Animator bodyAnim;
+    public Animator legsAnim;
     public WeaponRotation weaponRotation;
     public WeaponController weaponController;
     private PlatformerCharacter2D playerGFX;
@@ -79,5 +80,13 @@ public class CharacterAnimator : MonoBehaviour {
         machineGun.SetActive(false);
         pistol.SetActive(false);
         knife.SetActive(false);
+    }
+
+    public void Die() {
+        EnableIks();
+        weaponController.enabled = false;
+        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (playerGFX.m_FacingRight ? 1 : -1));
+        bodyAnim.SetBool("Died", true);
+        legsAnim.SetBool("Died", true);
     }
 }
