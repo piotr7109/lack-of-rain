@@ -1,32 +1,28 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 using System.Collections;
 using UnityStandardAssets._2D;
 
-public class WeaponController : MonoBehaviour {
+public abstract class WeaponShooting : MonoBehaviour {
 
     private float timeToFire = 0;
     public Weapon weapon;
     public Transform firePoint;
-    public PlatformerCharacter2D playerGFX;
+    public PlatformerCharacter2D characterGFX;
     public CharacterAnimator characterAnimator;
 
     private bool isReloading = false;
     private ShootManager shootManager;
 
-    public delegate void OnReloading(float reloadTime);
-    public OnReloading onReloading;
-
-    void Start() {
+    void Awake() {
         shootManager = gameObject.AddComponent<ShootManager>();
-        shootManager.setParameters(playerGFX, firePoint);
-
-        EquipmentManager.instance.onWeaponChanged += OnWeaponChanged;
+        shootManager.setParameters(characterGFX, firePoint);
     }
 
     void Update() {
+        bool wantShoot = WantShoot();
+
         if (weapon == null) {
-            if (Input.GetButtonDown("Fire1")) {
+            if (wantShoot) {
                 characterAnimator.MeleeAttack();
             }
             return;
@@ -37,30 +33,26 @@ public class WeaponController : MonoBehaviour {
         }
 
         if (weapon.fireRate == 0) {
-            if (Input.GetButtonDown("Fire1")) {
+            if (wantShoot) {
                 TryToShoot();
             }
         } else {
-            if (Input.GetButton("Fire1") && Time.time > timeToFire) {
+            if (WantShootMultiple() && Time.time > timeToFire) {
                 timeToFire = Time.time + 1 / weapon.fireRate;
                 TryToShoot();
             }
         }
 
-        if (Input.GetButtonDown("Reload")) {
+        if (WantReload()) {
             StartCoroutine(Reload());
         }
     }
 
-    void OnWeaponChanged(Weapon weapon) {
-        this.weapon = weapon;
-    }
-
-    IEnumerator Reload() {
+    private IEnumerator Reload() {
         isReloading = true;
 
-        if (weapon.Reload()) {
-            onReloading.Invoke(weapon.reloadTime);
+        if (WeaponReload()) {
+            characterAnimator.ReloadWeapon(weapon.reloadTime);
             yield return new WaitForSeconds(weapon.reloadTime);
         } else {
             yield return null;
@@ -75,9 +67,9 @@ public class WeaponController : MonoBehaviour {
         }
     }
 
-    bool CheckIfCanShoot() {
-        return
-            weapon.bullets > 0 &&
-            !EventSystem.current.IsPointerOverGameObject();
-    }
+    protected abstract bool WantShoot();
+    protected abstract bool WantShootMultiple();
+    protected abstract bool WantReload();
+    protected abstract bool WeaponReload();
+    protected abstract bool CheckIfCanShoot();
 }

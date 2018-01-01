@@ -14,21 +14,18 @@ public class CharacterAnimator : MonoBehaviour {
 
     public Animator bodyAnim;
     public Animator legsAnim;
-    public WeaponRotation weaponRotation;
-    public WeaponController weaponController;
+    public CharacterRotation weaponRotation;
+    public WeaponShooting weaponShooting;
     private PlatformerCharacter2D playerGFX;
 
     EquipmentManager equipmentManager;
 
     void Start() {
-        playerGFX = PlayerManager.instance.player.GetComponent<PlatformerCharacter2D>();
-        equipmentManager = EquipmentManager.instance;
-        equipmentManager.onWeaponChanged += UpdateWeapon;
-        weaponController.onReloading += ReloadWeapon;
-        UpdateWeapon(EquipmentManager.instance.weapon);
+        playerGFX = GetComponentInParent<PlatformerCharacter2D>();
+        UpdateWeapon(weaponShooting.weapon);
     }
 
-    void UpdateWeapon(Weapon weapon) {
+    public void UpdateWeapon(Weapon weapon) {
         HideWeapons();
         int weaponType = weapon != null ? (int)weapon.type : 0;
 
@@ -50,20 +47,20 @@ public class CharacterAnimator : MonoBehaviour {
                 break;
         }
 
-        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (playerGFX.m_FacingRight ? 1 : -1));
+        ResetRotation();
 
         yield return new WaitForSeconds(.7f);
         EnableIks(false);
     }
 
-    void ReloadWeapon(float reloadTime) {
+    public void ReloadWeapon(float reloadTime) {
         StartCoroutine(ReloadAnim(reloadTime));
     }
 
     IEnumerator ReloadAnim(float reloadTime) {
         EnableIks();
         bodyAnim.SetBool("Reloading", true);
-        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (playerGFX.m_FacingRight ? 1 : -1));
+        ResetRotation();
 
         yield return new WaitForSeconds(reloadTime);
 
@@ -83,11 +80,32 @@ public class CharacterAnimator : MonoBehaviour {
         knife.SetActive(false);
     }
 
+    void ResetRotation() {
+        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (playerGFX.m_FacingRight ? 1 : -1));
+    }
+
     public void Die() {
         EnableIks();
-        weaponController.enabled = false;
-        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (playerGFX.m_FacingRight ? 1 : -1));
+        weaponShooting.enabled = false;
+        ResetRotation();
         bodyAnim.SetBool("Died", true);
         legsAnim.SetBool("Died", true);
+    }
+
+    public void MeleeAttack() {
+        StartCoroutine(PerformMeleeAttack());
+    }
+
+    IEnumerator PerformMeleeAttack() {
+        int attackMode = Random.Range(0, 2); //TODO
+
+        EnableIks();
+        ResetRotation();
+        bodyAnim.SetInteger("AttackMode", attackMode);
+
+        yield return new WaitForSeconds(1f);
+
+        bodyAnim.SetInteger("AttackMode", -1);
+        EnableIks(false);
     }
 }
