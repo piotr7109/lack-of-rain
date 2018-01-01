@@ -6,12 +6,16 @@ public abstract class CharacterRotation : MonoBehaviour {
     public PlatformerCharacter2D characterGFX;
     public Transform playerBody;
 
+    public Animator anim;
+
     private float initialRotation = 90;
 
     protected abstract Vector3 GetLookTarget();
 
     void Update() {
-        SetCharacterRotation();
+        if (!anim.GetBool("Died")) {
+            SetCharacterRotation();
+        }
     }
 
     void SetCharacterRotation() {

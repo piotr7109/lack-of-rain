@@ -13,6 +13,7 @@ public abstract class WeaponShooting : MonoBehaviour {
     public PlatformerCharacter2D characterGFX;
     public CharacterAnimator characterAnimator;
     private CharacterStats selfStats;
+    public Animator anim;
 
     private bool isReloading = false;
     private ShootManager shootManager;
@@ -24,6 +25,10 @@ public abstract class WeaponShooting : MonoBehaviour {
     }
 
     void Update() {
+        if (anim.GetBool("Died")) {
+            return;
+        }
+
         bool wantShoot = WantShoot();
 
         if (weapon == null) {
