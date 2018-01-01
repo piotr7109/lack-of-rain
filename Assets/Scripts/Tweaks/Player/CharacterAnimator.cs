@@ -68,22 +68,6 @@ public class CharacterAnimator : MonoBehaviour {
         EnableIks(false);
     }
 
-    void EnableIks(bool enable = true) {
-        weaponRotation.enabled = !enable;
-        leftArmIK.SetActive(enable);
-        rightArmIk.SetActive(enable);
-    }
-
-    void HideWeapons() {
-        machineGun.SetActive(false);
-        pistol.SetActive(false);
-        knife.SetActive(false);
-    }
-
-    void ResetRotation() {
-        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (playerGFX.m_FacingRight ? 1 : -1));
-    }
-
     public void Die() {
         EnableIks();
         weaponShooting.enabled = false;
@@ -103,9 +87,25 @@ public class CharacterAnimator : MonoBehaviour {
         ResetRotation();
         bodyAnim.SetInteger("AttackMode", attackMode);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         bodyAnim.SetInteger("AttackMode", -1);
         EnableIks(false);
+    }
+
+    void EnableIks(bool enable = true) {
+        weaponRotation.enabled = !enable;
+        leftArmIK.SetActive(enable);
+        rightArmIk.SetActive(enable);
+    }
+
+    void HideWeapons() {
+        machineGun.SetActive(false);
+        pistol.SetActive(false);
+        knife.SetActive(false);
+    }
+
+    void ResetRotation() {
+        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (playerGFX.m_FacingRight ? 1 : -1));
     }
 }

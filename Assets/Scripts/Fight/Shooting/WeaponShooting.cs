@@ -7,6 +7,7 @@ public abstract class WeaponShooting : MonoBehaviour {
     private float timeToFire = 0;
     public Weapon weapon;
     public Transform firePoint;
+    public float meleeAttackSpeed = 1f;
     public PlatformerCharacter2D characterGFX;
     public CharacterAnimator characterAnimator;
 
@@ -23,7 +24,7 @@ public abstract class WeaponShooting : MonoBehaviour {
 
         if (weapon == null) {
             if (wantShoot) {
-                characterAnimator.MeleeAttack();
+                AttackMelee();
             }
             return;
         }
@@ -45,6 +46,15 @@ public abstract class WeaponShooting : MonoBehaviour {
 
         if (WantReload()) {
             StartCoroutine(Reload());
+        }
+    }
+
+    private float timeToMeleeAttack = 0;
+
+    void AttackMelee() {
+        if (Time.time > timeToMeleeAttack) {
+            timeToMeleeAttack = Time.time + 1 / meleeAttackSpeed;
+            characterAnimator.MeleeAttack();
         }
     }
 

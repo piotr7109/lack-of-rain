@@ -9,18 +9,17 @@ public class EnemyNpc : MonoBehaviour {
 
     public float chaseRadius = 25;
     public float attackRadius = 15;
-    public float meleeAttackSpeed = 5f;
     public float meleeRadius = 1.2f;
     public Transform firePoint;
     public CharacterStats stats;
     public CharacterRotation characterRotation;
-    public WeaponShooting weaponShooting;
+    public EnemyShooting weaponShooting;
 
     public Animator anim;
 
     void Awake() {
         enabled = false;
-        weaponShooting.enabled = false;
+        weaponShooting.wantToShoot = false;
     }
 
     void Start() {
@@ -53,10 +52,8 @@ public class EnemyNpc : MonoBehaviour {
             }
         }
 
-        characterRotation.enabled = distance <= chaseRadius;
-
         if (distance > chaseRadius) {
-            weaponShooting.enabled = false;
+            weaponShooting.wantToShoot = false;
         }
     }
 
@@ -65,7 +62,7 @@ public class EnemyNpc : MonoBehaviour {
     void Chase() {
         int direction = player.position.x > transform.position.x ? 1 : -1;
 
-        weaponShooting.enabled = false;
+        weaponShooting.wantToShoot = false;
         character.Move(direction, false, false);
 
         if (prevPos.x == transform.position.x) {
@@ -76,18 +73,9 @@ public class EnemyNpc : MonoBehaviour {
     }
 
     void Attack() {
-        weaponShooting.enabled = true;
+        character.Move(0, false, false);
+        weaponShooting.wantToShoot = true;
     }
-
-    /*
-    private float timeToMeleeAttack = 0;
-
-    void AttackMelee() {
-        if (Time.time > timeToMeleeAttack) {
-            timeToMeleeAttack = Time.time + 1 / meleeAttackSpeed;
-        }
-    }
-    */
 
     void OnDrawGizmosSelected() {
         Gizmos.color = Color.gray;

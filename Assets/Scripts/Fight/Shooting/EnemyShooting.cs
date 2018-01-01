@@ -1,15 +1,20 @@
-﻿public class EnemyShooting : WeaponShooting {
+﻿using UnityEngine;
+
+public class EnemyShooting : WeaponShooting {
+
+    [HideInInspector]
+    public bool wantToShoot;
 
     protected override bool WantShoot() {
-        return weapon.type == WeaponType.Pistol;
+        return wantToShoot && (weapon == null || weapon.type == WeaponType.Pistol);
     }
 
     protected override bool WantShootMultiple() {
-        return weapon.type == WeaponType.MachineGun;
+        return wantToShoot && weapon.type == WeaponType.MachineGun;
     }
 
     protected override bool WantReload() {
-        return weapon.bullets <= 0;
+        return weapon != null && weapon.bullets <= 0;
     }
 
     protected override bool WeaponReload() {
