@@ -33,4 +33,8 @@ public class PlayerShooting : WeaponShooting {
             weapon.bullets > 0 &&
             !EventSystem.current.IsPointerOverGameObject();
     }
+
+    protected override string GetTargetTag() {
+        return "Enemy";
+    }
 }

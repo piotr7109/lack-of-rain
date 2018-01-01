@@ -5,11 +5,7 @@ public class NpcStats : CharacterStats {
     public List<GameObject> items;
     public int experienceGained = 100;
 
-    private Animator anim;
-
-    void Start() {
-        anim = GetComponent<Animator>();
-    }
+    public Animator anim;
 
     public override void Die() {
         if (!anim.GetBool("Died")) {

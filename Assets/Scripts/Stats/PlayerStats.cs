@@ -58,7 +58,7 @@ public class PlayerStats : CharacterStats {
     }
 
     void OnWeaponChanged(Weapon item) {
-        damage.SetBaseValue(item != null ? item.damage : 0);
+        damage.SetBaseValue(item != null ? item.damage : 30);
         SubscribeChange();
     }
 

@@ -25,4 +25,8 @@ public class EnemyShooting : WeaponShooting {
     protected override bool CheckIfCanShoot() {
         return weapon.bullets > 0;
     }
+
+    protected override string GetTargetTag() {
+        return "Player";
+    }
 }

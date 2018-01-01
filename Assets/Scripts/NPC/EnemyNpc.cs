@@ -66,7 +66,7 @@ public class EnemyNpc : MonoBehaviour {
         character.Move(direction, false, false);
 
         if (prevPos.x == transform.position.x) {
-            character.Move(0, false, true);
+            //character.Move(0, false, true);
         }
 
         prevPos = transform.position;
