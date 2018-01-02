@@ -7,5 +7,6 @@ public class StartMenu : MonoBehaviour {
 
 	public void StartNewGame() {
         SceneManager.LoadScene(startLevel);
+        
     }
 }
