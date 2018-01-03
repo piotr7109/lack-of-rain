@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class Npc : Interactable {
 
     public string dialogueFilename;
     public NpcReaction reaction = NpcReaction.None;
     public List<Quest> quests;
+    
     private EnemyNpc enemy;
 
     public override void Start() {
