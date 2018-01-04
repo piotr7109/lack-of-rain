@@ -47,7 +47,7 @@ namespace GameSerialization {
             SceneManager.LoadScene(sceneBuildIndex);
         }
 
-        void OnLevelWasLoaded(int level) {
+        /*void OnLevelWasLoaded(int level) {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream sceneFile = File.Open(Application.dataPath + SCENES_SAVE_FILE, FileMode.Open);
             int sceneBuildIndex = (int)bf.Deserialize(sceneFile);
@@ -59,7 +59,7 @@ namespace GameSerialization {
 
             file.Close();
 
-        }
+        }*/
     }
 
     [Serializable]

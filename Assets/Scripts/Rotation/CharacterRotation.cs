@@ -12,7 +12,7 @@ public abstract class CharacterRotation : MonoBehaviour {
 
     protected abstract Vector3 GetLookTarget();
 
-    void Update() {
+    void LateUpdate() {
         if (!anim.GetBool("Died")) {
             SetCharacterRotation();
         }

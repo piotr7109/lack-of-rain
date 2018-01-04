@@ -6,6 +6,7 @@ public class Weapon : Item {
     public int damage;
     public float fireRate;
     public int magazineSize;
+    public int bullets;
     public float bulletSpeed;
     public float effectSpawnRate = 1;
     public WeaponType type;
@@ -13,13 +14,6 @@ public class Weapon : Item {
     [Tooltip("Bullets spread angle in degress")]
     public int aimSpread = 0;
     public GameObject bulletPrefab;
-
-    [HideInInspector]
-    public int bullets;
-
-    void Awake() {
-        bullets = magazineSize;
-    }
 
     public override string GetAmount() {
         return bullets + "";

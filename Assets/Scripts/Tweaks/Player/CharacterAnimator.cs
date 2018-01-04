@@ -34,7 +34,7 @@ public class CharacterAnimator : MonoBehaviour {
     }
 
     IEnumerator ShowWeapon(int weaponType) {
-        EnableIks();
+        EnableWeaponRotation();
         switch (weaponType) {
             case 0:
                 knife.SetActive(true);
@@ -50,7 +50,7 @@ public class CharacterAnimator : MonoBehaviour {
         ResetRotation();
 
         yield return new WaitForSeconds(.7f);
-        EnableIks(false);
+        EnableWeaponRotation(false);
     }
 
     public void ReloadWeapon(float reloadTime) {
@@ -58,18 +58,18 @@ public class CharacterAnimator : MonoBehaviour {
     }
 
     IEnumerator ReloadAnim(float reloadTime) {
-        EnableIks();
+        EnableWeaponRotation();
         bodyAnim.SetBool("Reloading", true);
         ResetRotation();
 
         yield return new WaitForSeconds(reloadTime);
 
         bodyAnim.SetBool("Reloading", false);
-        EnableIks(false);
+        EnableWeaponRotation(false);
     }
 
     public void Die() {
-        EnableIks();
+        EnableWeaponRotation();
         weaponShooting.enabled = false;
         ResetRotation();
         bodyAnim.SetBool("Died", true);
@@ -83,20 +83,18 @@ public class CharacterAnimator : MonoBehaviour {
     IEnumerator PerformMeleeAttack() {
         int attackMode = Random.Range(0, 2); //TODO
 
-        EnableIks();
+        EnableWeaponRotation();
         ResetRotation();
         bodyAnim.SetInteger("AttackMode", attackMode);
 
         yield return new WaitForSeconds(2f);
 
         bodyAnim.SetInteger("AttackMode", -1);
-        EnableIks(false);
+        EnableWeaponRotation(false);
     }
 
-    void EnableIks(bool enable = true) {
+    void EnableWeaponRotation(bool enable = true) {
         weaponRotation.enabled = !enable;
-        leftArmIK.SetActive(enable);
-        rightArmIk.SetActive(enable);
     }
 
     void HideWeapons() {

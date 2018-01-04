@@ -49,6 +49,7 @@ public class Inventory : MonoBehaviour {
         itemDrop.name = item.name;
         itemDrop.gameObject.GetComponent<ItemPickup>().item = item;
         itemDrop.gameObject.GetComponent<SpriteRenderer>().sprite = item.icon;
+        
         Remove(item);
     }
 
