@@ -33,13 +33,13 @@ namespace GameSerialization {
         //EnemyShooting.cs
         string weaponName;
         float attackSpeed;
-        float attackDamage;
 
         //Npc.cs
         float radius;
         string dialogueFilename;
         NpcReaction reaction;
         List<string> questNames;
+        List<QuestStatus> questStatuses;
 
         //EnemyNpc.cs
         float chaseRadius;
@@ -65,10 +65,13 @@ namespace GameSerialization {
             dialogueFilename = npc.dialogueFilename;
             reaction = npc.reaction;
             questNames = new List<string>();
-            npc.quests.ForEach(quest => questNames.Add(quest.title));
+            questStatuses = new List<QuestStatus>();
+            npc.quests.ForEach(quest => {
+                questNames.Add(quest.title);
+                questStatuses.Add(quest.status);
+            });
 
             attackSpeed = enemyShooting.meleeAttackSpeed;
-            attackDamage = enemyShooting.meleeAttackDamage;
             weaponName = enemyShooting.weapon.name;
 
             chaseRadius = enemyNpc.chaseRadius;
@@ -77,13 +80,13 @@ namespace GameSerialization {
         }
 
         public void CreateInstance(Transform transform) {
-            transform.position = position.GetVector();
-            SetStats(transform.GetComponent<NpcStats>());
-            SetNpc(transform.GetComponentInChildren<Npc>());
-            SetEnemyShooting(transform.GetComponentInChildren<EnemyShooting>());
-            SetEnemyNpc(transform.GetComponentInChildren<EnemyNpc>());
-
             GameObject gameObject = GameObject.Instantiate(transform.gameObject, transform.position, transform.rotation);
+
+            gameObject.transform.position = position.GetVector();
+            SetStats(gameObject.GetComponent<NpcStats>());
+            SetNpc(gameObject.GetComponentInChildren<Npc>());
+            SetEnemyShooting(gameObject.GetComponentInChildren<EnemyShooting>());
+            SetEnemyNpc(gameObject.GetComponentInChildren<EnemyNpc>());
 
         }
 
@@ -101,13 +104,13 @@ namespace GameSerialization {
             npc.radius = radius;
             npc.dialogueFilename = dialogueFilename;
             npc.reaction = reaction;
+
             npc.quests = new List<Quest>();
             questNames.ForEach(questTitle => npc.quests.Add(AssetsManager.GetQuest(questTitle)));
         }
 
         void SetEnemyShooting(EnemyShooting shooting) {
             shooting.meleeAttackSpeed = attackSpeed;
-            shooting.meleeAttackDamage = attackDamage;
             shooting.weapon = AssetsManager.GetItem(weaponName) as Weapon;
         }
 

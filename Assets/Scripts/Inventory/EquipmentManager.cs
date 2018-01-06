@@ -24,12 +24,6 @@ public class EquipmentManager : MonoBehaviour {
     public OnArmourChanged onArmourChanged;
     public OnWeaponChanged onWeaponChanged;
 
-    Inventory inventory;
-
-    void Start() {
-        inventory = Inventory.instance;
-    }
-
     public void EquipArmour(Armour armour) {
         UnequipArmour();
         this.armour = armour;
@@ -63,7 +57,7 @@ public class EquipmentManager : MonoBehaviour {
     }
 
     public void SubscribeChange() {
-        inventory.SubscribeChange();
+        Inventory.instance.SubscribeChange();
     }
 
     public void SubscribeArmourChange() {

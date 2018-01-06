@@ -6,6 +6,7 @@ public class BringItemQuest : Quest {
     public Item item;
 
     public override bool IsFinnished() {
+        Debug.Log(item.name);
         return Inventory.instance.FindItem(item.name) != null;
     }
 

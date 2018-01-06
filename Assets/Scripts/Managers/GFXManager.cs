@@ -11,6 +11,7 @@ public class GFXManager : MonoBehaviour {
 
     void Awake() {
         instance = this;
+        SetUpRefs();
     }
 
     #endregion
@@ -20,7 +21,7 @@ public class GFXManager : MonoBehaviour {
     private CameraPerlinShake cameraShake;
     private TimeManager timeManager;
 
-    void Start() {
+    void SetUpRefs() {
         cam = Camera.main;
         postProcessingProfile = cam.GetComponent<PostProcessingBehaviour>().profile;
         cameraShake = cam.GetComponent<CameraPerlinShake>();

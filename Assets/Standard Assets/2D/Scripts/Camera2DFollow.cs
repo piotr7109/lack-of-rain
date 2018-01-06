@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D
@@ -15,7 +14,7 @@ namespace UnityStandardAssets._2D
         private Vector3 m_LastTargetPosition;
         private Vector3 m_CurrentVelocity;
         private Vector3 m_LookAheadPos;
-
+        
         // Use this for initialization
         private void Start()
         {
@@ -23,7 +22,6 @@ namespace UnityStandardAssets._2D
             m_OffsetZ = (transform.position - target.position).z;
             transform.parent = null;
         }
-
 
         // Update is called once per frame
         private void Update()

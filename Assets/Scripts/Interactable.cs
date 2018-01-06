@@ -5,7 +5,7 @@ public class Interactable : MonoBehaviour {
     public float radius = 3f;
 
     protected Transform player;
-    
+
     private GameObject interactionTooltip;
 
     protected static PrefabsManager prefabsManager;
@@ -15,8 +15,8 @@ public class Interactable : MonoBehaviour {
             prefabsManager = PrefabsManager.instance;
         }
 
-        player = PlayerManager.instance.player.transform;
         CreateTooltip();
+        player = PlayerManager.instance.player.transform;
     }
 
     void CreateTooltip() {
@@ -34,6 +34,7 @@ public class Interactable : MonoBehaviour {
     protected float distanceToPlayer = int.MaxValue;
 
     void Update() {
+
         distanceToPlayer = Vector2.Distance(player.position, transform.position);
 
         if (distanceToPlayer <= radius) {

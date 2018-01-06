@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerManager : MonoBehaviour {
 
@@ -14,4 +13,8 @@ public class PlayerManager : MonoBehaviour {
     #endregion
 
     public GameObject player;
+
+    void Start() {
+        player = GameObject.Find("Player");
+    }
 }

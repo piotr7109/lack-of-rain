@@ -9,7 +9,6 @@ public abstract class WeaponShooting : MonoBehaviour {
     public Weapon weapon;
     public Transform firePoint;
     public float meleeAttackSpeed = 1f;
-    public float meleeAttackDamage;
     public PlatformerCharacter2D characterGFX;
     public CharacterAnimator characterAnimator;
     private CharacterStats selfStats;

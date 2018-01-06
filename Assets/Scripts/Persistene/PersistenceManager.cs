@@ -8,10 +8,20 @@ using UnityEngine.SceneManagement;
 
 namespace GameSerialization {
     public class PersistenceManager : MonoBehaviour {
-        public Transform npcPrefab;
 
-        private const string SCENES_SAVE_FILE = "/saves/SaveData.scene.dat";
-        private const string SAVE_FILE = "/saves/SaveData.dat";
+        #region Singleton
+        public static PersistenceManager instance;
+
+        void Awake() {
+            instance = this;
+        }
+
+        #endregion
+
+        public GameObject loadingPanel;
+        public Transform npcPrefab;
+        public Transform itemPrefab;
+        public Transform startPoint;
 
         void Update() {
             if (Input.GetKeyDown(KeyCode.O)) {
@@ -23,51 +33,104 @@ namespace GameSerialization {
             }
         }
 
-        void Save() {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.dataPath + SAVE_FILE);
-            FileStream sceneFile = File.Create(Application.dataPath + SCENES_SAVE_FILE);
-            GameData data = new GameData();
-
-            bf.Serialize(file, data);
-            bf.Serialize(sceneFile, SceneManager.GetActiveScene().buildIndex);
-
-            file.Close();
-            sceneFile.Close();
+        public void Save() {
+            new GameData().SaveGame();
         }
 
-        AsyncOperation asyncLoadLevel;
+        public void Load() {
+            GameData gameData = new GameData();
+            gameData.LoadSavedGame();
 
-        void Load() {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream sceneFile = File.Open(Application.dataPath + SCENES_SAVE_FILE, FileMode.Open);
-            int sceneBuildIndex = (int)bf.Deserialize(sceneFile);
-            sceneFile.Close();
-
-            SceneManager.LoadScene(sceneBuildIndex);
+            SceneManager.LoadScene(gameData.currentLevel);
         }
 
-        /*void OnLevelWasLoaded(int level) {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream sceneFile = File.Open(Application.dataPath + SCENES_SAVE_FILE, FileMode.Open);
-            int sceneBuildIndex = (int)bf.Deserialize(sceneFile);
-            
-            FileStream file = File.Open(Application.dataPath + SAVE_FILE, FileMode.Open);
-            GameData data = (GameData)bf.Deserialize(file);
+        void DestroySceneElements() {
+            Array.ForEach(new string[] { "Enemy", "Item" }, key => Array.ForEach(GameObject.FindGameObjectsWithTag(key), go => Destroy(go)));
+        }
 
-            data.npcs.ForEach(npc => npc.CreateInstance(npcPrefab));
+        void Start() {
+            loadingPanel.SetActive(true);
+            StartCoroutine(LoadSceneElements());
+        }
 
-            file.Close();
+        IEnumerator LoadSceneElements() {
+            yield return new WaitForSeconds(.1f);
 
-        }*/
+            GameData gameData = new GameData();
+            gameData.LoadSavedGame();
+            string activeScene = SceneManager.GetActiveScene().name;
+
+            if (gameData.player != null) {
+                gameData.player.CreateInstance(PlayerManager.instance.player.transform, GameObject.Find("GameManager").transform);
+            }
+
+            if (gameData.scenes.ContainsKey(activeScene)) {
+                SceneData data = gameData.scenes[activeScene];
+
+                DestroySceneElements();
+                data.npcs.ForEach(npc => npc.CreateInstance(npcPrefab));
+                data.items.ForEach(item => item.CreateInstance(itemPrefab));
+            } else {
+                PlayerManager.instance.player.transform.position = startPoint.position;
+                gameData.SaveGame();
+            }
+
+            loadingPanel.SetActive(false);
+        }
     }
 
     [Serializable]
     public class GameData {
-        public List<SerializedNpc> npcs;
+        public string currentLevel;
+        public Dictionary<string, SceneData> scenes;
+        public SerializedPlayer player;
 
-        public GameData() {
+        private const string SAVE_FILE = "/saves/SaveData.dat";
+
+        public void SaveGame() {
+            if (File.Exists(Application.dataPath + SAVE_FILE)) {
+                LoadSavedGame();
+            } else {
+                File.Create(Application.dataPath + SAVE_FILE).Close();
+                scenes = new Dictionary<string, SceneData>();
+            }
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.dataPath + SAVE_FILE, FileMode.Open);
+
+            currentLevel = SceneManager.GetActiveScene().name;
+            scenes[currentLevel] = new SceneData();
+            player = PlayerSerialization.GetSerialized();
+
+            bf.Serialize(file, this);
+            file.Close();
+        }
+
+        public void LoadSavedGame() {
+            if (File.Exists(Application.dataPath + SAVE_FILE)) {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = File.Open(Application.dataPath + SAVE_FILE, FileMode.Open);
+                GameData gameData = (GameData)bf.Deserialize(file);
+
+                scenes = gameData.scenes;
+                currentLevel = gameData.currentLevel;
+                player = gameData.player;
+                file.Close();
+            } else {
+                scenes = new Dictionary<string, SceneData>();
+                currentLevel = SceneManager.GetActiveScene().name;
+            }
+        }
+    }
+
+    [Serializable]
+    public class SceneData {
+        public List<SerializedNpc> npcs;
+        public List<SerializedItem> items;
+
+        public SceneData() {
             npcs = SerializeNpcs.GetSerialized();
+            items = ItemsSerialization.GetSerialized();
         }
     }
 }

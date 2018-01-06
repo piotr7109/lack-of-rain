@@ -26,6 +26,10 @@ public class Inventory : MonoBehaviour {
 
     public List<Item> items = new List<Item>();
 
+    void Start() {
+        player = PlayerManager.instance.player.transform;
+    }
+
     public bool Add(Item item) {
         if (items.Count >= space) {
             return false;

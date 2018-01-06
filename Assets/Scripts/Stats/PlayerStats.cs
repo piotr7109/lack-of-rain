@@ -15,7 +15,7 @@ public class PlayerStats : CharacterStats {
     public delegate void OnStatsChanged();
     public OnStatsChanged onStatsChangedCallback;
     public CharacterAnimator characterAnimator;
-    private GFXManager gfxManager;
+    public GFXManager gfxManager;
 
     void Start() {
         gfxManager = GFXManager.instance;

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 
 public class AssetsManager : MonoBehaviour {
@@ -10,12 +10,17 @@ public class AssetsManager : MonoBehaviour {
 
     void Awake() {
         instance = this;
+        CloneQuests();
     }
 
     #endregion
 
     public List<ItemAsset> itemAssets;
     public List<QuestAsset> questAssets;
+    
+    void CloneQuests() {
+        questAssets.ForEach(questAsset => questAsset.quest = GameObject.Instantiate(questAsset.quest));
+    }
 
     public static Item GetItem(string name) {
         ItemAsset result = instance.itemAssets.Find(item => item.name == name);
@@ -28,13 +33,13 @@ public class AssetsManager : MonoBehaviour {
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class ItemAsset : Asset {
     [SerializeField]
     public Item item;
 }
 
-[System.Serializable]
+[Serializable]
 public class QuestAsset :Asset {
     [SerializeField]
     public Quest quest;

@@ -20,11 +20,11 @@ public class Weapon : Item {
     }
 
     public override void Use() {
-        if (this.equiped) {
+        if (equiped) {
             EquipmentManager.instance.UnequipWeapon();
         } else {
             base.Use();
-            this.equiped = true;
+            equiped = true;
             EquipmentManager.instance.EquipWeapon(this);
         }
     }

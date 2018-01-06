@@ -34,6 +34,7 @@ public class QuestsUI : MonoBehaviour {
 
     void Show() {
         TimeManager.instance.StopTime();
+        UpdateUI();
         journalUI.SetActive(true);
     }
 

@@ -32,6 +32,7 @@ public class InventoryUI : MonoBehaviour {
 
     void OpenInventory() {
         TimeManager.instance.StopTime();
+        UpdateUI();
         inventoryUI.SetActive(true);
     }
 

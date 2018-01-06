@@ -13,7 +13,7 @@ public class EquipmentUI : MonoBehaviour {
     void Start() {
         equipmentManager = EquipmentManager.instance;
         Inventory.instance.onItemChangedCallback += UpdateUI;
-
+        UpdateUI();
     }
 
     void UpdateUI() {
