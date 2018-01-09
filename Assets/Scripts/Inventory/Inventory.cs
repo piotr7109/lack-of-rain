@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour {
     public OnItemChanged onItemChangedCallback;
 
     public int space = 20;
-    [HideInInspector] public Transform player;
+    [HideInInspector] private Transform player;
     public Transform defaultItem;
 
     public List<Item> items = new List<Item>();
