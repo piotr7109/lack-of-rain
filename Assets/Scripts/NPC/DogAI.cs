@@ -6,7 +6,7 @@ public class DogAI : MonoBehaviour {
     private PlatformerCharacter2D character;
     public CharacterStats stats;
     private Transform player;
-    private Animator anim;
+    public Animator anim;
 
     // Use this for initialization
     void Start () {
@@ -14,7 +14,6 @@ public class DogAI : MonoBehaviour {
 
         character = GetComponentInParent<PlatformerCharacter2D>();
         stats = GetComponentInParent<CharacterStats>();
-        anim = GetComponentInChildren<Animator>();
 
     }
 	

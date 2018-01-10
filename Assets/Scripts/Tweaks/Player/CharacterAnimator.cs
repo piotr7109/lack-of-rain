@@ -17,7 +17,7 @@ public class CharacterAnimator : MonoBehaviour {
     public CharacterRotation weaponRotation;
     public WeaponShooting weaponShooting;
     private PlatformerCharacter2D playerGFX;
-
+    
     EquipmentManager equipmentManager;
 
     void Start() {
@@ -30,7 +30,17 @@ public class CharacterAnimator : MonoBehaviour {
         int weaponType = weapon != null ? (int)weapon.type : 0;
 
         bodyAnim.SetInteger("WeaponType", weaponType);
+
         StartCoroutine(ShowWeapon(weaponType));
+
+        if (weapon != null) {
+            if (weapon.type == WeaponType.MachineGun) {
+                machineGun.GetComponent<Animator>().SetTrigger(weapon.name);
+
+            } else if (weapon.type == WeaponType.Pistol) {
+                pistol.GetComponent<Animator>().SetTrigger(weapon.name);
+            }
+        }
     }
 
     IEnumerator ShowWeapon(int weaponType) {
