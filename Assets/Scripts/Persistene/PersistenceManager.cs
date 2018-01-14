@@ -50,7 +50,7 @@ namespace GameSerialization {
         }
 
         IEnumerator LoadSceneElements() {
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.01f);
 
             GameData gameData = new GameData();
             gameData.LoadSavedGame();
