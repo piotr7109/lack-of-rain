@@ -44,10 +44,6 @@ namespace GameSerialization {
             SceneManager.LoadScene(gameData.currentLevel);
         }
 
-        void DestroySceneElements() {
-            Array.ForEach(new string[] { "Enemy", "Item" }, key => Array.ForEach(GameObject.FindGameObjectsWithTag(key), go => Destroy(go)));
-        }
-
         void Start() {
             loadingPanel.SetActive(true);
             StartCoroutine(LoadSceneElements());
@@ -65,6 +61,7 @@ namespace GameSerialization {
             }
 
             if (gameData.scenes.ContainsKey(activeScene)) {
+                Debug.Log("HAS");
                 SceneData data = gameData.scenes[activeScene];
 
                 DestroySceneElements();
@@ -76,6 +73,13 @@ namespace GameSerialization {
             }
 
             loadingPanel.SetActive(false);
+        }
+
+        void DestroySceneElements() {
+            Array.ForEach(
+                new string[] { "Enemy", "Item" },
+                key => Array.ForEach(GameObject.FindGameObjectsWithTag(key), go => Destroy(go))
+            );
         }
     }
 

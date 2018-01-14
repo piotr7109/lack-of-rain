@@ -15,37 +15,20 @@ public class AssetsManager : MonoBehaviour {
 
     #endregion
 
-    public List<ItemAsset> itemAssets;
-    public List<QuestAsset> questAssets;
+    public List<Item> itemAssets;
+    public List<Quest> questAssets;
     
     void CloneQuests() {
-        questAssets.ForEach(questAsset => questAsset.quest = GameObject.Instantiate(questAsset.quest));
+        for(int i = 0; i < questAssets.Count; i++) {
+            questAssets[i] = Instantiate(questAssets[i]);
+        }
     }
 
     public static Item GetItem(string name) {
-        ItemAsset result = instance.itemAssets.Find(item => item.name == name);
-        return result != null ? result.item : null;
+        return instance.itemAssets.Find(item => item.name == name);
     }
 
     public static Quest GetQuest(string title) {
-        QuestAsset result = instance.questAssets.Find(item => item.name == title);
-        return result != null ? result.quest : null;
+        return instance.questAssets.Find(quest => quest.title == title);
     }
-}
-
-[Serializable]
-public class ItemAsset : Asset {
-    [SerializeField]
-    public Item item;
-}
-
-[Serializable]
-public class QuestAsset :Asset {
-    [SerializeField]
-    public Quest quest;
-}
-
-public class Asset {
-    [SerializeField]
-    public string name;
 }
