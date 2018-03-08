@@ -10,7 +10,7 @@ public class DogAI : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        player = PlayerManager.instance.player.transform;
+        player = PlayerManager.player.transform;
 
         character = GetComponentInParent<PlatformerCharacter2D>();
         stats = GetComponentInParent<CharacterStats>();

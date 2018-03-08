@@ -6,14 +6,17 @@ public class BringItemQuest : Quest {
     public Item item;
 
     public override bool IsFinnished() {
-        Debug.Log(item.name);
-        return Inventory.instance.FindItem(item.name) != null;
+        Inventory inventory = PlayerManager.inventory;
+
+        return inventory.FindItem(item.name) != null;
     }
 
     public override void GetReward() {
         base.GetReward();
 
-        Inventory.instance.FindItem(item.name).RemoveFromInventory();
+        Inventory inventory = PlayerManager.inventory;
+
+        inventory.Remove(inventory.FindItem(item.name));
 
         LevelsManager.instance.AddExperience(reward.experience);
     }

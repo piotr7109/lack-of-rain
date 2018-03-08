@@ -16,7 +16,7 @@ public class Interactable : MonoBehaviour {
         }
 
         CreateTooltip();
-        player = PlayerManager.instance.player.transform;
+        player = PlayerManager.player.transform;
     }
 
     void CreateTooltip() {
@@ -41,6 +41,7 @@ public class Interactable : MonoBehaviour {
             interactionTooltip.SetActive(true);
 
             if (Input.GetButtonDown("Action")) {
+                Interact(PlayerManager.inventory);
                 Interact();
             }
         } else {
@@ -48,8 +49,8 @@ public class Interactable : MonoBehaviour {
         }
     }
 
-    public virtual void Interact() {
-    }
+    public virtual void Interact() { }
+    public virtual void Interact(Inventory inventory) { }
 
     protected virtual void OnDrawGizmosSelected() {
         Gizmos.color = Color.yellow;

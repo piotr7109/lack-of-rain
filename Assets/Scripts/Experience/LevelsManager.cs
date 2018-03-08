@@ -18,7 +18,7 @@ public class LevelsManager : MonoBehaviour {
     private List<Level> levels;
     public int currentLevel { get; set; }
     public int experience { get; set; }
-    private PlayerStats stats;
+    private CharacterStats stats;
     private GameObject player;
 
     public delegate void onExperienceChangedCallback();
@@ -26,8 +26,8 @@ public class LevelsManager : MonoBehaviour {
 
     void Start() {
         levels = LevelsSerialization.LoadLevelsData();
-        stats = PlayerStats.instance;
-        player = PlayerManager.instance.player;
+        stats = PlayerManager.stats;
+        player = PlayerManager.player;
     }
 
     public void AddExperience(int amount) {

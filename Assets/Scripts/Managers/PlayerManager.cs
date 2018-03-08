@@ -1,20 +1,48 @@
 ﻿using UnityEngine;
+using UnityStandardAssets._2D;
 
 public class PlayerManager : MonoBehaviour {
 
-    #region Singleton
+    public GameObject playerReference;
 
-    public static PlayerManager instance;
-    
+    [HideInInspector]
+    public static GameObject player;
+
+    public static CharacterStats stats;
+    public static Equipment equipment;
+    public static Inventory inventory;
+    public static WeaponShooting shooting;
+    public static CharacterRotation rotation;
+
     void Awake() {
-        instance = this;
+        player = playerReference;
+        stats = player.GetComponent<CharacterStats>();
+        equipment = player.GetComponent<Equipment>();
+        inventory = player.GetComponent<Inventory>();
+        shooting = player.GetComponentInChildren<WeaponShooting>();
+        rotation = player.GetComponentInChildren<CharacterRotation>();
+
+        DisableAI();
+        SetTags();
+        SetCamera();
     }
 
-    #endregion
+    void DisableAI() {
+        Transform AI = player.transform.Find("AI");
+        AI.GetComponent<EnemyAI>().enabled = false;
+        AI.GetComponent<Npc>().enabled = false;
+    }
 
-    public GameObject player;
+    void SetTags() {
+        MeleePoint meleePoint = player.GetComponentInChildren<MeleePoint>();
 
-    void Start() {
-        player = GameObject.Find("Player");
+        player.tag = "Player";
+        meleePoint.targetTag = "Enemy";
+    }
+
+    void SetCamera() {
+        Camera2DFollow cam = FindObjectOfType<Camera2DFollow>();
+
+        cam.target = player.transform;
     }
 }

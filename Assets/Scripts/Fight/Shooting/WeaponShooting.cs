@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityStandardAssets._2D;
 
-public abstract class WeaponShooting : MonoBehaviour {
+public class WeaponShooting : MonoBehaviour {
 
     private float timeToFire = 0;
-    public Weapon weapon;
     public Transform firePoint;
     public float meleeAttackSpeed = 1f;
     public PlatformerCharacter2D characterGFX;
@@ -14,52 +12,67 @@ public abstract class WeaponShooting : MonoBehaviour {
     private CharacterStats selfStats;
     public Animator anim;
 
+    private Inventory inventory;
+    private Equipment equipment;
     private bool isReloading = false;
     private ShootManager shootManager;
+    private MeleePoint meleePoint;
+    private Weapon weapon;
 
     void Awake() {
         shootManager = gameObject.AddComponent<ShootManager>();
-        shootManager.setParameters(characterGFX, firePoint);
         selfStats = GetComponentInParent<CharacterStats>();
+        inventory = GetComponentInParent<Inventory>();
+        equipment = GetComponentInParent<Equipment>();
+        meleePoint = GetComponentInChildren<MeleePoint>();
+        shootManager.setParameters(characterGFX, firePoint, equipment);
+
+        equipment.onWeaponChanged += UpdateWeapon;
+        UpdateWeapon(equipment.weapon);
     }
 
-    void Update() {
-        if (anim.GetBool("Died")) {
-            return;
-        }
+    //simplify reference
+    void UpdateWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
 
-        bool wantShoot = WantShoot();
-
+    public void ShootSingle() {
         if (weapon == null) {
-            if (wantShoot) {
-                StartCoroutine(AttackMelee());
-            }
+            StartCoroutine(AttackMelee());
             return;
         }
 
-        if (isReloading) {
+        if (isReloading || weapon.fireRate > 0) {
             return;
         }
 
-        if (weapon.fireRate == 0) {
-            if (wantShoot) {
-                TryToShoot();
-            }
-        } else {
-            if (WantShootMultiple() && Time.time > timeToFire) {
-                timeToFire = Time.time + 1 / weapon.fireRate;
-                TryToShoot();
-            }
+        if (Time.time > timeToFire) {
+            timeToFire = Time.time + 1 / weapon.effectSpawnRate;
+            TryToShoot();
+        }
+    }
+
+    public void ShootMultiple() {
+        if (weapon == null) {
+            StartCoroutine(AttackMelee());
+            return;
         }
 
-        if (WantReload()) {
-            StartCoroutine(Reload());
+        if (weapon.fireRate == 0 || isReloading) {
+            return;
         }
+
+        if (Time.time > timeToFire) {
+            timeToFire = Time.time + 1 / weapon.fireRate;
+            TryToShoot();
+        }
+    }
+
+    public void ReloadWeapon() {
+        StartCoroutine(Reload());
     }
 
     private float timeToMeleeAttack = 0;
-    private List<GameObject> meleeTargets = new List<GameObject>();
-    protected abstract string GetTargetTag();
 
     IEnumerator AttackMelee() {
         if (Time.time > timeToMeleeAttack) {
@@ -67,52 +80,22 @@ public abstract class WeaponShooting : MonoBehaviour {
             characterAnimator.MeleeAttack();
 
             yield return new WaitForSeconds(meleeAttackSpeed / 2f); //Animation fluency purpose
+            
+            GameObject target = meleePoint.GetMeleeTarget();
 
-            if (meleeTargets.Count > 0) {
-                GameObject target = GetMeleeTarget();
-
-                if (target != null) {
-                    Debug.Log(target);
-                    target.GetComponentInParent<CharacterStats>().TakeDamage(selfStats.damage.GetValue());
-                }
+            if (target != null) {
+                Debug.Log(target);
+                target.GetComponentInParent<CharacterStats>().TakeDamage(selfStats.meleeDamage.GetValue());
             }
         } else {
             yield return null;
         }
     }
 
-    GameObject GetMeleeTarget() {
-        bool turnedRight = characterGFX.m_FacingRight;
-
-        meleeTargets.RemoveAll(item => item == null);
-        return meleeTargets.Find(target => {
-            float targetX = target.transform.position.x;
-            float selfX = transform.position.x;
-
-            return turnedRight ? targetX >= selfX : targetX <= selfX;
-        });
-    }
-
-    void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.tag == GetTargetTag()) {
-            GameObject target = collider.gameObject;
-
-            if (!meleeTargets.Contains(target)) {
-                meleeTargets.Add(target);
-            }
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collider) {
-        if (collider.tag == GetTargetTag()) {
-            meleeTargets.Remove(collider.gameObject);
-        }
-    }
-
     private IEnumerator Reload() {
         isReloading = true;
 
-        if (WeaponReload()) {
+        if (weapon.Reload(inventory)) {
             characterAnimator.ReloadWeapon(weapon.reloadTime);
             yield return new WaitForSeconds(weapon.reloadTime);
         } else {
@@ -123,14 +106,10 @@ public abstract class WeaponShooting : MonoBehaviour {
     }
 
     void TryToShoot() {
-        if (CheckIfCanShoot()) {
+        if (weapon.bullets > 0) {
             shootManager.Shoot(weapon);
+        } else {
+            equipment.EquipWeapon(null);
         }
     }
-
-    protected abstract bool WantShoot();
-    protected abstract bool WantShootMultiple();
-    protected abstract bool WantReload();
-    protected abstract bool WeaponReload();
-    protected abstract bool CheckIfCanShoot();
 }

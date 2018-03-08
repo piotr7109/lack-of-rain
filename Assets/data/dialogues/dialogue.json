@@ -17,7 +17,7 @@
                     "destinationNodeId": 2
                 },
 				{
-                    "text": "I have briought you an armour",
+                    "text": "I have briought you an AK-47",
                     "destinationNodeId": 5,
 					"questId": [0],
 					"questStatus": 1
@@ -46,7 +46,7 @@
             "text": "Please check that list:",
             "options": [
                 {
-                    "text": "Bring armour",
+                    "text": "Bring machine gun AK-47",
                     "destinationNodeId": 3,
 					"questId": [0],
 					"questStatus": 0

@@ -15,14 +15,15 @@ public class CharacterAnimator : MonoBehaviour {
     public Animator bodyAnim;
     public Animator legsAnim;
     public CharacterRotation weaponRotation;
-    public WeaponShooting weaponShooting;
-    private PlatformerCharacter2D playerGFX;
-    
-    EquipmentManager equipmentManager;
+    private PlatformerCharacter2D charGFX;
+    private Equipment equipment;
 
     void Start() {
-        playerGFX = GetComponentInParent<PlatformerCharacter2D>();
-        UpdateWeapon(weaponShooting.weapon);
+        charGFX = GetComponentInParent<PlatformerCharacter2D>();
+        equipment = GetComponentInParent<Equipment>();
+
+        equipment.onWeaponChanged += UpdateWeapon;
+        UpdateWeapon(equipment.weapon);
     }
 
     public void UpdateWeapon(Weapon weapon) {
@@ -80,7 +81,6 @@ public class CharacterAnimator : MonoBehaviour {
 
     public void Die() {
         EnableWeaponRotation();
-        weaponShooting.enabled = false;
         ResetRotation();
         bodyAnim.SetBool("Died", true);
         legsAnim.SetBool("Died", true);
@@ -114,6 +114,6 @@ public class CharacterAnimator : MonoBehaviour {
     }
 
     void ResetRotation() {
-        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (playerGFX.m_FacingRight ? 1 : -1));
+        bodyTransform.eulerAngles = new Vector3(0, 0, 90 * (charGFX.m_FacingRight ? 1 : -1));
     }
 }

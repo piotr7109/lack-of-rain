@@ -57,7 +57,7 @@ namespace GameSerialization {
             string activeScene = SceneManager.GetActiveScene().name;
 
             if (gameData.player != null) {
-                gameData.player.CreateInstance(PlayerManager.instance.player.transform, GameObject.Find("GameManager").transform);
+                gameData.player.CreateInstance(PlayerManager.player.transform, GameObject.Find("GameManager").transform);
             }
 
             if (gameData.scenes.ContainsKey(activeScene)) {
@@ -68,7 +68,7 @@ namespace GameSerialization {
                 data.npcs.ForEach(npc => npc.CreateInstance(npcPrefab));
                 data.items.ForEach(item => item.CreateInstance(itemPrefab));
             } else {
-                PlayerManager.instance.player.transform.position = startPoint.position;
+                PlayerManager.player.transform.position = startPoint.position;
                 gameData.SaveGame();
             }
 

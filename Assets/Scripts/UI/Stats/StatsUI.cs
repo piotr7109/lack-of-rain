@@ -10,12 +10,12 @@ public class StatsUI : MonoBehaviour {
     public StatUI experience;
     public StatUI level;
 
-    private PlayerStats stats;
+    private CharacterStats stats;
     private LevelsManager levelsManager;
 
     void Start() {
         levelsManager = LevelsManager.instance;
-        stats = PlayerStats.instance;
+        stats = PlayerManager.stats;
         stats.onStatsChangedCallback += UpdateUI;
         levelsManager.onExperienceChanged += UpdateUI;
         UpdateUI();

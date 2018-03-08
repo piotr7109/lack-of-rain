@@ -7,13 +7,13 @@
         SetTooltipSprite(prefabsManager.pickUpIcon);
     }
 
-    public override void Interact() {
-        base.Interact();
-        PickUp();
+    public override void Interact(Inventory inventory) {
+        base.Interact(inventory);
+        PickUp(inventory);
     }
 
-    void PickUp() {
-        if (Inventory.instance.Add(Instantiate(item) as Item)) {
+    void PickUp(Inventory inventory) {
+        if (inventory.Add(Instantiate(item) as Item)) {
             Destroy(gameObject);
         }
     }

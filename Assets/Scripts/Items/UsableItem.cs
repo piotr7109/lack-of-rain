@@ -6,9 +6,13 @@ public class UsableItem : Item {
     public int healthRestoration = 0;
     public int radiationReduction = 0;
 
-    public override void Use() {
-        base.Use();
-        PlayerStats.instance.Heal(this);
-        RemoveFromInventory();
+    public override void Use(CharacterStats stats) {
+        base.Use(stats);
+        stats.Heal(this);
+    }
+
+    public override void Use(Inventory inventory) {
+        base.Use(inventory);
+        inventory.Remove(this);
     }
 }

@@ -41,12 +41,14 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     public void OnRemoveButton() {
-        item.DropItem();
+        PlayerManager.inventory.DropItem(item);
     }
 
     public void UseItem() {
         if (item != null) {
-            item.Use();
+            item.Use(PlayerManager.stats);
+            item.Use(PlayerManager.equipment);
+            item.Use(PlayerManager.inventory);
         }
     }
 

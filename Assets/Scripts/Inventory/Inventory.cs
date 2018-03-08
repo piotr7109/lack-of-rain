@@ -3,31 +3,17 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour {
 
-    #region Singleton
-
-    public static Inventory instance;
-
-    void Awake() {
-        if (instance != null) {
-            Debug.LogWarning("More than one instance of Inventory found!");
-        }
-
-        instance = this;
-    }
-
-    #endregion
-
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
 
     public int space = 20;
-    [HideInInspector] private Transform player;
-    public Transform defaultItem;
 
     public List<Item> items = new List<Item>();
 
-    void Start() {
-        player = PlayerManager.instance.player.transform;
+    void Awake() {
+        for (int i = 0; i < items.Count; i++) {
+            items[i] = Instantiate(items[i]);
+        }
     }
 
     public bool Add(Item item) {
@@ -46,15 +32,23 @@ public class Inventory : MonoBehaviour {
         SubscribeChange();
     }
 
-    public void DropItem(Item item) {
-        Vector3 spawnPosition = new Vector3(player.position.x, player.position.y, player.position.y);
-        Transform itemDrop = Object.Instantiate(defaultItem, spawnPosition, defaultItem.rotation) as Transform;
+    public void DropAllItems() {
+        items.ForEach(item => DropItem(item, false));
+        items.Clear();
+    }
 
+    public void DropItem(Item item, bool remove = true) {
+        Transform defaultItem = PrefabsManager.instance.defaultItem;
+        Vector2 spawnPosition = new Vector2(transform.position.x + Random.Range(-1f, 1f), transform.position.y);
+        Transform itemDrop = Instantiate(defaultItem, spawnPosition, defaultItem.rotation) as Transform;
+        
         itemDrop.name = item.name;
         itemDrop.gameObject.GetComponent<ItemPickup>().item = item;
         itemDrop.gameObject.GetComponent<SpriteRenderer>().sprite = item.icon;
-        
-        Remove(item);
+
+        if (remove) {
+            Remove(item);
+        }
     }
 
     public int FindBullets(WeaponType weaponType, int amount) {

@@ -7,10 +7,12 @@ public class ShootManager : MonoBehaviour {
     private PlatformerCharacter2D character;
     private Transform firePoint;
     private GameObject muzzleFlash;
+    private Equipment equipment;
 
-    public void setParameters(PlatformerCharacter2D character, Transform firePoint) {
+    public void setParameters(PlatformerCharacter2D character, Transform firePoint, Equipment equipment) {
         this.character = character;
         this.firePoint = firePoint;
+        this.equipment = equipment;
 
         muzzleFlash = firePoint.Find("MuzzleFlash").gameObject;
     }
@@ -32,6 +34,7 @@ public class ShootManager : MonoBehaviour {
 
             timeToSpawnEffect = Time.time + 1 / weapon.effectSpawnRate;
             weapon.Shoot();
+            equipment.SubscribeChange();
             MakeEffects();
 
             if (!turnedRight) {

@@ -7,13 +7,13 @@ public class Armour : Item {
     public int condition = 100;
     public int movementReduction = 0;
 
-    public override void Use() {
+    public override void Use(Equipment equipment) {
         if (this.equiped) {
-            EquipmentManager.instance.UnequipArmour();
+            equipment.UnequipArmour();
         } else {
-            base.Use();
+            base.Use(equipment);
             this.equiped = true;
-            EquipmentManager.instance.EquipArmour(this);
+            equipment.EquipArmour(this);
         }
     }
 

@@ -48,8 +48,8 @@ namespace GameSerialization {
 
         public SerializedNpc(GameObject gameObject) {
             position = new Position(gameObject.transform.position);
-            EnemyShooting enemyShooting = gameObject.GetComponentInChildren<EnemyShooting>();
-            EnemyNpc enemyNpc = gameObject.GetComponentInChildren<EnemyNpc>();
+            WeaponShooting enemyShooting = gameObject.GetComponentInChildren<WeaponShooting>();
+            EnemyAI enemyNpc = gameObject.GetComponentInChildren<EnemyAI>();
             NpcStats stats = gameObject.GetComponent<NpcStats>();
             Npc npc = gameObject.GetComponentInChildren<Npc>();
 
@@ -72,7 +72,7 @@ namespace GameSerialization {
             });
 
             attackSpeed = enemyShooting.meleeAttackSpeed;
-            weaponName = enemyShooting.weapon.name;
+            //weaponName = enemyShooting.weapon.name;
 
             chaseRadius = enemyNpc.chaseRadius;
             attackRadius = enemyNpc.attackRadius;
@@ -85,8 +85,8 @@ namespace GameSerialization {
             gameObject.transform.position = position.GetVector();
             SetStats(gameObject.GetComponent<NpcStats>());
             SetNpc(gameObject.GetComponentInChildren<Npc>());
-            SetEnemyShooting(gameObject.GetComponentInChildren<EnemyShooting>());
-            SetEnemyNpc(gameObject.GetComponentInChildren<EnemyNpc>());
+            SetEnemyShooting(gameObject.GetComponentInChildren<WeaponShooting>());
+            SetEnemyNpc(gameObject.GetComponentInChildren<EnemyAI>());
 
         }
 
@@ -109,12 +109,12 @@ namespace GameSerialization {
             questNames.ForEach(questTitle => npc.quests.Add(AssetsManager.GetQuest(questTitle)));
         }
 
-        void SetEnemyShooting(EnemyShooting shooting) {
+        void SetEnemyShooting(WeaponShooting shooting) {
             shooting.meleeAttackSpeed = attackSpeed;
-            shooting.weapon = AssetsManager.GetItem(weaponName) as Weapon;
+            //shooting.weapon = AssetsManager.GetItem(weaponName) as Weapon;
         }
 
-        void SetEnemyNpc(EnemyNpc enemy) {
+        void SetEnemyNpc(EnemyAI enemy) {
             enemy.chaseRadius = chaseRadius;
             enemy.attackRadius = attackRadius;
             enemy.meleeRadius = meleeRadius;

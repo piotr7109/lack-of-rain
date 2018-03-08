@@ -21,11 +21,15 @@ public class GFXManager : MonoBehaviour {
     private CameraPerlinShake cameraShake;
     private TimeManager timeManager;
 
+    // Delayed initialization purpose
+    void Start() {
+        timeManager = TimeManager.instance;
+    }
+
     void SetUpRefs() {
         cam = Camera.main;
         postProcessingProfile = cam.GetComponent<PostProcessingBehaviour>().profile;
         cameraShake = cam.GetComponent<CameraPerlinShake>();
-        timeManager = TimeManager.instance;
         SetUp();
     }
 

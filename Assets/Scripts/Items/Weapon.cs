@@ -19,26 +19,25 @@ public class Weapon : Item {
         return bullets + "";
     }
 
-    public override void Use() {
+    public override void Use(Equipment equipment) {
         if (equiped) {
-            EquipmentManager.instance.UnequipWeapon();
+            equipment.UnequipWeapon();
         } else {
-            base.Use();
+            base.Use(equipment);
             equiped = true;
-            EquipmentManager.instance.EquipWeapon(this);
+            equipment.EquipWeapon(this);
         }
     }
 
     public void Shoot() {
         bullets--;
-        EquipmentManager.instance.SubscribeChange();
     }
 
-    public bool Reload() {
-        int gainedBullets = Inventory.instance.FindBullets(type, magazineSize - bullets);
+    public bool Reload(Inventory inventory) {
+        int gainedBullets = inventory.FindBullets(type, magazineSize - bullets);
 
         bullets += gainedBullets;
-        EquipmentManager.instance.SubscribeChange();
+        inventory.SubscribeChange();
 
         return gainedBullets > 0;
     }

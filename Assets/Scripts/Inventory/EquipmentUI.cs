@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class EquipmentUI : MonoBehaviour {
@@ -8,17 +6,17 @@ public class EquipmentUI : MonoBehaviour {
     public Image weaponIcon;
     public Image armourIcon;
 
-    private EquipmentManager equipmentManager;
+    private Equipment equipment;
 
     void Start() {
-        equipmentManager = EquipmentManager.instance;
-        Inventory.instance.onItemChangedCallback += UpdateUI;
+        equipment = PlayerManager.equipment;
+        PlayerManager.inventory.onItemChangedCallback += UpdateUI;
         UpdateUI();
     }
 
     void UpdateUI() {
-        SetSlotIcon(weaponIcon, equipmentManager.weapon);
-        SetSlotIcon(armourIcon, equipmentManager.armour);
+        SetSlotIcon(weaponIcon, equipment.weapon);
+        SetSlotIcon(armourIcon, equipment.armour);
     }
 
     void SetSlotIcon(Image slotIcon, Item item) {

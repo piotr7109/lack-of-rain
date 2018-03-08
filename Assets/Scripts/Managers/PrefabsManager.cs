@@ -17,4 +17,6 @@ public class PrefabsManager : MonoBehaviour {
     public Sprite pickUpIcon;
     public Sprite talkIcon;
     
+    public Transform defaultItem;
+
 }

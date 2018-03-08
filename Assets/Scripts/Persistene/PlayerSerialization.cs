@@ -32,8 +32,8 @@ namespace GameSerialization {
 
         public SerializedPlayer(GameObject player, GameObject gameMaster) {
             position = new Position(player.transform.position);
-            PlayerStats stats = player.GetComponent<PlayerStats>();
-            PlayerShooting shooting = player.GetComponentInChildren<PlayerShooting>();
+            CharacterStats stats = player.GetComponent<CharacterStats>();
+            WeaponShooting shooting = player.GetComponentInChildren<WeaponShooting>();
 
             maxHealth = stats.currentHealth;
             damage = stats.damage;
@@ -49,15 +49,15 @@ namespace GameSerialization {
             
             gameObject.transform.position = position.GetVector();
 
-            SetStats(gameObject.GetComponent<PlayerStats>());
+            SetStats(gameObject.GetComponent<CharacterStats>());
 
-            Weapon weapon = transform.GetComponentInChildren<PlayerShooting>().weapon;
+            Weapon weapon = transform.GetComponentInChildren<Equipment>().weapon;
             weaponName = weapon != null ? weapon.name : "";
 
             gameManager.CreateInstance(gameMaster);
         }
-
-        void SetStats(PlayerStats stats) {
+        
+        void SetStats(CharacterStats stats) {
             stats.maxHealth = maxHealth;
             stats.damage = damage;
             stats.armour = armour;
@@ -87,15 +87,15 @@ namespace GameSerialization {
 
         public SerializedGameManager(GameObject gameObject) {
             Inventory inventory = gameObject.GetComponent<Inventory>();
-            EquipmentManager equipment = gameObject.GetComponent<EquipmentManager>();
+            //EquipmentManager equipment = gameObject.GetComponent<EquipmentManager>();
             QuestManager quests = gameObject.GetComponent<QuestManager>();
             LevelsManager levels = gameObject.GetComponent<LevelsManager>();
 
             itemNames = new List<string>();
             inventory.items.ForEach(item => itemNames.Add(item.name));
 
-            armourName = equipment.armour != null ? equipment.armour.name : null;
-            weaponName = equipment.weapon != null ? equipment.weapon.name : null;
+            //armourName = equipment.armour != null ? equipment.armour.name : null;
+            //weaponName = equipment.weapon != null ? equipment.weapon.name : null;
 
             questNames = new List<string>();
             questStatuses = new List<QuestStatus>();
@@ -109,20 +109,20 @@ namespace GameSerialization {
         }
 
         public void CreateInstance(Transform gameMaster) {
-            Inventory inventory = gameMaster.GetComponent<Inventory>();
-            EquipmentManager equipment = gameMaster.GetComponent<EquipmentManager>();
+            Inventory inventory = gameMaster.GetComponentInChildren<Inventory>();
+            //EquipmentManager equipment = gameMaster.GetComponentInChildren<EquipmentManager>();
+            LevelsManager levels = gameMaster.GetComponentInChildren<LevelsManager>();
             QuestManager quests = gameMaster.GetComponent<QuestManager>();
-            LevelsManager levels = gameMaster.GetComponent<LevelsManager>();
 
             inventory.items = new List<Item>();
             itemNames.ForEach(itemName => inventory.Add(GameObject.Instantiate(AssetsManager.GetItem(itemName) as Item)));
             
             if (weaponName != null) {
-                inventory.FindItem(weaponName).Use();
+                //inventory.FindItem(weaponName).Use();
             }
 
             if (armourName != null) {
-                inventory.FindItem(armourName).Use();
+                //inventory.FindItem(armourName).Use();
             }
 
             quests.quests = new List<Quest>();

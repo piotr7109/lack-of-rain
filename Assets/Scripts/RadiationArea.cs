@@ -12,23 +12,23 @@ public class RadiationArea : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.tag == "Player") {
+        if (collider.gameObject == PlayerManager.player) {
             StartCoroutine(IncreaseRadiation(collider.transform));
         }
     }
 
     void OnTriggerExit2D(Collider2D collider) {
-        if (collider.tag == "Player") {
+        if (collider.gameObject == PlayerManager.player) {
             StopAllCoroutines();
             gfxManager.GrainEffectTurnOff(GetInstanceID());
         }
     }
 
-    IEnumerator IncreaseRadiation(Transform player) {
+    IEnumerator IncreaseRadiation(Transform character) {
         while (true) {
             yield return new WaitForSeconds(1f);
 
-            player.GetComponent<PlayerStats>().IncreaseRadiationLevel(radiationStrength);
+            character.GetComponent<CharacterStats>().IncreaseRadiationLevel(radiationStrength);
             gfxManager.GrainEffect(radiationStrength, GetInstanceID());
         }
     }

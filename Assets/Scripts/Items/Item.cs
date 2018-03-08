@@ -9,15 +9,9 @@ public class Item : ScriptableObject {
     //[HideInInspector]
     public bool equiped = false;
 
-    public virtual void Use() { }
-
-    public void RemoveFromInventory() {
-        Inventory.instance.Remove(this);
-    }
-
-    public void DropItem() {
-        Inventory.instance.DropItem(this);
-    }
+    public virtual void Use(Equipment equipment) { }
+    public virtual void Use(CharacterStats stats) { }
+    public virtual void Use(Inventory inventory) { }
 
     public virtual string GetAmount() {
         return "";

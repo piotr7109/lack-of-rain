@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityStandardAssets._2D;
 
-public abstract class CharacterRotation : MonoBehaviour {
+public class CharacterRotation : MonoBehaviour {
 
     public PlatformerCharacter2D characterGFX;
     public Transform playerBody;
@@ -9,8 +9,11 @@ public abstract class CharacterRotation : MonoBehaviour {
     public Animator anim;
 
     private float initialRotation = 90;
+    private Vector3 lookTarget;
 
-    protected abstract Vector3 GetLookTarget();
+    public void SetLookTarget(Vector3 target) {
+        lookTarget = target;
+    }
 
     void LateUpdate() {
         if (!anim.GetBool("Died")) {
@@ -19,7 +22,7 @@ public abstract class CharacterRotation : MonoBehaviour {
     }
 
     void SetCharacterRotation() {
-        Vector3 difference = GetLookTarget() - playerBody.transform.position;
+        Vector3 difference = lookTarget - playerBody.transform.position;
         difference.y -= .5f;
         difference.Normalize();
         SetCharacterDirection(difference.x > 0);
